@@ -114,18 +114,6 @@ function App() {
 
   return (
     <main className="page">
-      <section className="hero">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-        >
-          <p className="eyebrow">horizontal exploration</p>
-          <h1>A Brief History</h1>
-          <p className="subtitle">Swipe or scroll to glide through time</p>
-        </motion.div>
-      </section>
-
       <section className="events-section">
         <motion.div
           className="events-rail"
@@ -147,7 +135,12 @@ function App() {
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{
+                opacity: { duration: 0.6, delay: index * 0.1 },
+                x: { duration: 0.6, delay: index * 0.1 },
+                scale: { duration: 0.15, ease: "easeOut" },
+                y: { duration: 0.15, ease: "easeOut" },
+              }}
             >
               <div className="card-content">
                 <span className="card-year">{item.year}</span>
