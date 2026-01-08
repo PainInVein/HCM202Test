@@ -143,12 +143,8 @@ function App() {
               }}
             >
               <div className="card-content">
-                <span className="card-year">{item.year}</span>
                 <h2 className="card-title">{item.title}</h2>
-                <p className="card-description">{item.description}</p>
-                <span className="card-cta">Explore →</span>
               </div>
-              <div className="card-background"></div>
             </motion.button>
           ))}
         </motion.div>
@@ -167,72 +163,50 @@ function App() {
           >
             <motion.div
               className="detail-page"
-              layoutId={`card-${activeIndex}`}
               initial={{
-                opacity: 0,
-                rotateY: -90,
-                scale: 0.8,
-                x: "-50%",
-                y: "-50%",
+                x: "100%",
               }}
               animate={{
-                opacity: 1,
-                rotateY: 0,
-                scale: 1,
-                x: "-50%",
-                y: "-50%",
+                x: 0,
               }}
               exit={{
-                opacity: 0,
-                rotateY: 90,
-                scale: 0.8,
-                x: "-50%",
-                y: "-50%",
+                x: "100%",
               }}
               transition={{
                 type: "spring",
-                stiffness: 200,
-                damping: 25,
-                duration: 0.6,
+                stiffness: 100,
+                damping: 20,
+                duration: 0.5,
               }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="detail-content">
                 <div className="detail-header">
-                  <motion.span
-                    className="detail-year"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    {activeItem.year}
-                  </motion.span>
                   <motion.button
                     className="detail-close"
                     onClick={() => setActiveIndex(null)}
                     aria-label="Close detail"
                     whileHover={{ scale: 1.1, rotate: 90 }}
                     whileTap={{ scale: 0.9 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
                   >
                     ×
                   </motion.button>
                 </div>
-                <motion.h3
-                  className="detail-title"
+                <motion.div
+                  className="detail-body"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  {activeItem.title}
-                </motion.h3>
-                <motion.p
-                  className="detail-copy"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  {activeItem.fullContent || activeItem.description}
-                </motion.p>
+                  <span className="detail-year">{activeItem.year}</span>
+                  <h3 className="detail-title">{activeItem.title}</h3>
+                  <p className="detail-copy">
+                    {activeItem.fullContent || activeItem.description}
+                  </p>
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>
