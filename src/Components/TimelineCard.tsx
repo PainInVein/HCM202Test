@@ -104,11 +104,20 @@ export function TimelineCard({ item, index, onClick }: TimelineCardProps) {
                className="relative w-full h-full bg-vintage-gold/5"
              >
                 {coverImage ? (
-                  <img 
-                    src={coverImage} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover grayscale-[0.2] contrast-[0.95] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
-                  />
+                  <>
+                    {/* Blurred Background Layer */}
+                    <img 
+                      src={coverImage} 
+                      alt="background" 
+                      className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 opacity-60"
+                    />
+                    {/* Sharp Foreground Layer */}
+                    <img 
+                      src={coverImage} 
+                      alt={item.title} 
+                      className="relative z-10 w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </>
                 ) : (
                    <div className="w-full h-full flex items-center justify-center font-display text-9xl text-vintage-gold/20 bg-[#F5F2EB]">
                      {index + 1}
