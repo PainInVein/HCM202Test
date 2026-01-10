@@ -1,5 +1,6 @@
-import { ReactNode, useEffect } from "react";
 import Lenis from "lenis";
+import { useEffect } from "react";
+import type { ReactNode } from "react";
 
 interface LenisScrollProps {
   children: ReactNode;
@@ -11,8 +12,7 @@ export function LenisScroll({ children }: LenisScrollProps) {
       lerp: 0.08, // Slightly more responsive than 0.1
       duration: 1.4,
       smoothWheel: true,
-      smoothTouch: true,
-      normalizeWheel: true,
+
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 

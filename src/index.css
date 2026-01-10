@@ -1,7 +1,19 @@
-@import "@fontsource/playfair-display";
-@import "@fontsource/inter";
+/* Import Google Fonts directly to ensure full Vietnamese support */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 @import "tailwindcss";
 
+@theme {
+  --font-display: "Playfair Display", serif;
+  --font-body: "Lora", serif;
+  --font-accent: "Cormorant Garamond", serif;
+  
+  --color-vintage-cream: #f4ECE1;
+  --color-vintage-gold: #C5A059;
+  --color-vintage-red: #8B2E2E;
+  --color-vintage-black: #1A1A1A;
+  --color-vintage-brown: #4A3B32;
+}
 
 /* Lenis required styles */
 html.lenis,
@@ -20,6 +32,24 @@ html.lenis body {
 /* Base resets */
 @layer base {
   body {
-    @apply antialiased text-base bg-white text-black;
+    @apply antialiased text-base bg-vintage-cream text-vintage-black font-body;
+    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png"); 
+    background-blend-mode: multiply;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+/* Custom Scrollbar for Webkit */
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-vintage-gold/50 rounded-full hover:bg-vintage-gold;
 }
