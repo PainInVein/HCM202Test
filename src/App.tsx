@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useMemo, useState } from "react";
+
 import { timelineData } from "./data/timelineData";
 import { TimelineCard } from "./Components/TimelineCard";
 import { DetailView } from "./Components/DetailView";
@@ -8,30 +8,10 @@ import { DetailView } from "./Components/DetailView";
 
 function App() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Xử lý chuyển đổi lăn chuột dọc thành ngang
+  // Remove horizontal scroll logic since we are going vertical
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const onWheel = (event: WheelEvent) => {
-      const hasVerticalIntent = Math.abs(event.deltaY) > Math.abs(event.deltaX);
-      if (hasVerticalIntent) {
-        event.preventDefault();
-        el.scrollBy({
-          left: event.deltaY * 1.5, // Tăng tốc độ cuộn một chút
-          behavior: "smooth",
-        });
-      }
-    };
-
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, []);
-
-  // Xử lý khóa scroll body khi mở detail
-  useEffect(() => {
+    // Reset body overflow when activeIndex changes
     if (activeIndex !== null) {
       document.body.style.overflow = "hidden";
     } else {
@@ -40,58 +20,62 @@ function App() {
     return () => { document.body.style.overflow = ""; };
   }, [activeIndex]);
 
-  // Đóng bằng phím Escape
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveIndex(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
   const activeItem = useMemo(
     () => (activeIndex !== null ? timelineData[activeIndex] : null),
     [activeIndex]
   );
 
   return (
-    <main className="w-full h-screen bg-gradient-to-br from-black to-dark-accent overflow-hidden relative">
-      
-      {/* Background Decor (Parallax fake) */}
-      <div className="absolute -left-[10%] top-[20%] w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -right-[10%] bottom-[20%] w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl pointer-events-none" />
+    <main className="w-full min-h-screen relative bg-vintage-cream selection:bg-vintage-gold/30">
+      {/* Global Background Textures */}
+      <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-80 pointer-events-none z-0 mix-blend-multiply" />
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
 
-      {/* Main Horizontal Scroll Section */}
-      <section className="w-full h-full flex items-center relative z-10">
+      {/* Hero Section / Header */}
+      <header className="relative w-full h-screen flex flex-col items-center justify-center text-center z-10 p-8">
         <motion.div
-          ref={scrollRef}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="
-            flex gap-10 px-8 md:px-16 overflow-x-auto overflow-y-hidden 
-            w-full snap-x snap-mandatory scroll-smooth cursor-grab active:cursor-grabbing pb-8
-            scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30
-            [&::-webkit-scrollbar]:h-2
-            [&::-webkit-scrollbar-track]:bg-transparent
-            [&::-webkit-scrollbar-thumb]:rounded-full
-            [&::-webkit-scrollbar-thumb]:bg-white/20
-          "
+           initial={{ opacity: 0, y: 50 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 1, ease: "easeOut" }}
         >
-          {timelineData.map((item, index) => (
-            <TimelineCard
-              key={index}
-              item={item}
-              index={index}
-              isActive={activeIndex === index}
-              onClick={() => setActiveIndex(index)}
-            />
-          ))}
-          
-          {/* Spacer cuối cùng để card cuối không bị dính lề */}
-          <div className="w-8 shrink-0" /> 
+          <p className="font-accent text-vintage-red tracking-[0.3em] uppercase text-xl md:text-2xl mb-6">
+            Không gian văn hóa & Lịch sử
+          </p>
+          <h1 className="font-display text-6xl md:text-8xl lg:text-9xl text-vintage-black leading-none mb-8">
+            HỒ CHÍ MINH
+          </h1>
+          <div className="w-24 h-1 bg-vintage-gold mx-auto mb-8" />
+          <p className="font-body text-vintage-brown/80 text-lg md:text-xl max-w-2xl mx-auto italic">
+            "Dân ta phải biết sử ta<br/>Cho tường gốc tích nước nhà Việt Nam"
+          </p>
         </motion.div>
-      </section>
+        
+        {/* Scroll Indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60"
+        >
+          <span className="text-xs font-bold uppercase tracking-widest text-vintage-black">Cuộn để khám phá</span>
+          <div className="w-[1px] h-16 bg-vintage-black" />
+        </motion.div>
+      </header>
+
+      {/* Timeline Sections */}
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto pb-32">
+        {/* Vertical Line Connector */}
+        <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[1px] bg-vintage-gold/30 -translate-x-1/2 hidden md:block" />
+
+        {timelineData.map((item, index) => (
+          <TimelineCard
+            key={index}
+            item={item}
+            index={index}
+            isActive={activeIndex === index}
+            onClick={() => setActiveIndex(index)}
+          />
+        ))}
+      </div>
 
       {/* Detail Overlay */}
       <AnimatePresence mode="wait">
