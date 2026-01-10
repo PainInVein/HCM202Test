@@ -27,7 +27,7 @@ export const timelineData: TimelineItemType[] = [
       { type: 'text', content: "Cuối thế kỷ XIX, Việt Nam bị thực dân Pháp đô hộ, chuyển từ xã hội phong kiến độc lập sang nước thuộc địa nửa phong kiến." },
       { type: 'text', content: "Các phong trào yêu nước theo hệ tư tưởng phong kiến (như Cần Vương với vua Hàm Nghi) hay xu hướng dân chủ tư sản (Đông Du của Phan Bội Châu, Duy Tân của Phan Châu Trinh) tuy diễn ra sôi nổi nhưng đều lần lượt thất bại." },
       { type: 'quote', content: "Cách mạng Việt Nam rơi vào khủng hoảng sâu sắc về đường lối cứu nước." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Phong+Trao+Can+Vuong', caption: "Hình ảnh minh họa phong trào Cần Vương" },
+      { type: 'image', src: 'https://i.ex-cdn.com/nhadautu.vn/files/content/2020/01/22/photo-1-15556437769231863753100-crop-15556440326491395197402-1132.jpg', caption: "Hình ảnh minh họa phong trào Cần Vương" },
       { type: 'heading', content: "Tác động quốc tế" },
       { type: 'text', content: "Chủ nghĩa tư bản chuyển sang giai đoạn đế quốc chủ nghĩa, tăng cường xâm lược và áp bức các dân tộc thuộc địa trên toàn thế giới." },
       { type: 'text', content: "Cách mạng Tháng Mười Nga (1917) thành công đã mở ra một thời đại mới, đưa lý luận Mác - Lênin vào hiện thực, đem lại ánh sáng hy vọng cho các dân tộc bị áp bức." }
@@ -47,7 +47,7 @@ export const timelineData: TimelineItemType[] = [
       { type: 'text', content: "Phương Tây: Tiếp thu các giá trị phổ quát về Tự do - Bình đẳng - Bác ái từ Đại cách mạng Pháp (1789) và tinh thần dân chủ trong Tuyên ngôn Độc lập của Mỹ (1776)." },
       { type: 'heading', content: "Chủ nghĩa Mác - Lênin" },
       { type: 'text', content: "Là cơ sở lý luận quyết định nhất, là 'cẩm nang thần kỳ' giúp Người tìm ra con đường giải phóng dân tộc đúng đắn." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Luan+Cuong+Lenin', caption: "Sơ thảo luận cương của Lênin" }
+      { type: 'image', src: 'https://tulieuvankien.dangcongsan.vn/upload/3000006/20251024/f2334d113505b423c42325de5514d633B%C3%A1o-nh%C3%A2n-%C4%91%E1%BA%A1o.jpg', caption: "Sơ thảo luận cương của Lênin" }
     ]
   },
   // --- 3. Nhân tố chủ quan ---
@@ -61,7 +61,7 @@ export const timelineData: TimelineItemType[] = [
       { type: 'text', content: "Người có tư duy độc lập, tự chủ, sáng tạo, không giáo điều rập khuôn. Đặc biệt là lòng yêu nước thương dân vô bờ bến và bản lĩnh chính trị kiên cường trước mọi thử thách." },
       { type: 'heading', content: "Tài năng hoạt động thực tiễn" },
       { type: 'text', content: "Thông qua hành trình bôn ba khắp 5 châu 4 biển, làm đủ mọi nghề (phụ bếp, cào tuyết, đốt lò, thợ ảnh...) để kiếm sống và hoạt động cách mạng. Người đã thấu hiểu sâu sắc bản chất tàn bạo của chủ nghĩa thực dân và nỗi thống khổ của nhân dân lao động trên toàn thế giới." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Nguyen+Tat+Thanh', caption: "Nguyễn Tất Thành - Người thanh niên yêu nước" },
+      { type: 'image', src: 'https://nguoikesu.com/images/wiki/nguyen-tat-thanh/d3a5e419e2c5f36772c83d77a4eb7203.jpg', caption: "Nguyễn Tất Thành - Người thanh niên yêu nước" },
       { type: 'video', content: "https://www.youtube.com/embed/58HGVK6j-80", caption: "Phim tài liệu về Chủ tịch Hồ Chí Minh" },
       { type: 'link', content: "https://khoinghieptre.tuoitrethudo.vn/nhung-hinh-anh-quy-hiem-ve-cuoc-doi-hoat-dong-cach-mang-cua-bac-ho-26090.html", caption: "Xem thêm hình ảnh quý hiếm về Bác Hồ" }
     ]
@@ -82,12 +82,14 @@ export const timelineData: TimelineItemType[] = [
       { type: 'heading', content: "Giáo dục & Nhận thức" },
       { type: 'text', content: "Tháng 8/1908, vào học tại Trường Quốc học Huế nhưng bị đuổi học vì tham gia phong trào chống thuế (1908)." },
       { type: 'text', content: "Năm 1910, vào Phan Thiết dạy chữ Hán và chữ Quốc ngữ tại trường Dục Thanh. Tại đây, Người tiếp cận tư tưởng tiến bộ của các nhà khai sáng Pháp (Rousseau, Montesquieu)." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Truong+Duc+Thanh', caption: "Trường Dục Thanh (Phan Thiết) - Nơi thầy giáo Nguyễn Tất Thành dạy học (1910)" },
+      { type: 'image', src: 'https://bbt.1cdn.vn/2025/05/17/dsc_9711.jpg', caption: "Tháng 5, về Dục Thanh nhớ Bác" },
+      { type: 'image', src: 'https://cdn.giaoducthoidai.vn/images/e68bd0ae7e0a4d2e84e451c6db68f2d45be2b050ff45bf09a5d1c9455ddc29def0fddb9c0c8e2ec1f6638996dfc55f5fac791c2099f5008f0d1d7f33d2927c25962d82620f07efe821a518f5e8a6d8aa511532ae5f34316d6ea27d15a4bece62ab202722b43cbea5f405b2dfc8f3c5c7/noi-luu-dau-cua-thay-giao-nguyen-tat-thanh-1-7180.jpeg.webp', caption: "Trường Dục Thanh (Phan Thiết) - Nơi thầy giáo Nguyễn Tất Thành dạy học (1910)" },
 
       { type: 'heading', content: "Quyết định lịch sử" },
       { type: 'text', content: "Không tán thành con đường của các bậc tiền bối: Phan Bội Châu muốn dựa vào Nhật (chẳng khác nào 'đuổi hổ cửa trước, rước beo cửa sau'), Phan Châu Trinh muốn dựa vào Pháp để cải cách (chẳng khác nào 'xin giặc rủ lòng thương')." },
       { type: 'text', content: "Người quyết định sang phương Tây để tìm hiểu 'những gì ẩn giấu sau sức mạnh của kẻ thù' và văn minh nhân loại." },
       { type: 'quote', content: "Muốn đánh Pháp thì phải hiểu Pháp." },
+      { type: 'image', src: 'https://ussh.vnu.edu.vn/uploads/ussh/news/2022_05/4.jpg', caption: "Nguyễn Tất Thành - Người thanh niên yêu nước" },
     ]
   },
 
@@ -100,7 +102,8 @@ export const timelineData: TimelineItemType[] = [
     details: [
       { type: 'heading', content: "Hành trình bôn ba (1911-1917)" },
       { type: 'text', content: "Ngày 5-6-1911, lấy tên Văn Ba, xin làm phụ bếp trên tàu Đô đốc Latouche-Tréville rời bến Nhà Rồng." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Tau+Latouche+Treville', caption: "Con tàu Đô đốc Latouche-Tréville" },
+      { type: 'image', src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiFmO5IALW2Wtr24ZswRqjoNGyaFUiwhrXNdiaYSO5krxA_YepbM8mgkMjlCMuRonXGVu1fRW943tAT463BDRtJymJlW_-hYyz02qgQEcMuKhbTfSjqEoksbDUQztzzNxQPFdAVkHIfFZw/s1600/AMIRAL_LATOUCHE_TREVILLE_CR_2.jpg', caption: "Con tàu Đô đốc Latouche-Tréville" },
+      { type: 'image', src: 'https://www.fahasa.com/blog/wp-content/uploads/2025/05/bac-ra-di-tim-duong.jpeg', caption: "Bác Hồ lên tàu Amiral Latouche Tréville ra đi tìm đường cứu nước" },
       { type: 'text', content: "Hành trình qua 3 đại dương, 4 châu lục: Từ Pháp (Marseille, Le Havre), sang Mỹ (New York, Boston - làm thuê ở Harlem), đến Anh (London - làm cào tuyết, đốt lò khách sạn Carlton)." },
       { type: 'quote', content: "Tình hữu ái vô sản là tình cảm chân thật nhất." },
 
@@ -112,7 +115,7 @@ export const timelineData: TimelineItemType[] = [
       { type: 'text', content: "Tháng 7-1920: Đọc 'Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và vấn đề thuộc địa' của Lênin trên báo L'Humanité." },
       { type: 'text', content: "Người cảm động đến phát khóc: 'Hỡi đồng bào bị đọa đày đau khổ! Đây là cái cần thiết cho chúng ta, đây là con đường giải phóng chúng ta!'." },
       { type: 'text', content: "Tháng 12-1920: Tại Đại hội Tours, bỏ phiếu tán thành Quốc tế III, trở thành một trong những người sáng lập Đảng Cộng sản Pháp." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Dai+Hoi+Tours', caption: "Nguyễn Ái Quốc phát biểu tại Đại hội Tours (12/1920)" }
+      { type: 'image', src: 'https://daknong.1cdn.vn/2020/12/23/baolamdong.vn-file-e7837c02845ffd04018473e6df282e92-dataimages-202012-original-_images2335718_t2.jpg', caption: "Nguyễn Ái Quốc phát biểu tại Đại hội Tours (12/1920)" }
     ]
   },
 
@@ -128,17 +131,18 @@ export const timelineData: TimelineItemType[] = [
 
       { type: 'heading', content: "Hoạt động tại Liên Xô (1923-1924)" },
       { type: 'text', content: "Học tại Đại học Phương Đông (KUTV) ở Moscow. Dự Đại hội V Quốc tế Cộng sản. Viết tác phẩm 'Bản án chế độ thực dân Pháp' (1925)." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Ban+An+Che+Do+Thuc+Dan', caption: "Tác phẩm Bản án chế độ thực dân Pháp" },
+      { type: 'image', src: 'https://imgnvsk.vnanet.vn/MediaUpload/Org/2023/08/16/ban-an-che-do-thuc-dan-phap-12-59-35-49916-16-26-12.jpg', caption: "Tác phẩm Bản án chế độ thực dân Pháp" },
 
       { type: 'heading', content: "Quảng Châu & Xiêm (1924-1929)" },
       { type: 'text', content: "Năm 1924, về Quảng Châu (Trung Quốc) với tên Lý Thụy. Thành lập 'Hội Việt Nam Cách mạng Thanh niên' (1925), ra báo 'Thanh Niên'." },
       { type: 'text', content: "Xuất bản 'Đường Kách mệnh' (1927) - cuốn sách gối đầu giường của các chiến sĩ cách mạng tiền bối." },
       { type: 'text', content: "Năm 1928, hoạt động tại Xiêm (Thái Lan) với bí danh Thầu Chín, tuyên truyền yêu nước trong Việt kiều." },
+      { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Duongkachmenh.jpg', caption: "'Đường Kách mệnh' (1927)" },
 
       { type: 'heading', content: "Thành lập Đảng (1930)" },
       { type: 'text', content: "Ngày 3-2-1930: Chủ trì Hội nghị hợp nhất tại Hương Cảng (Hồng Kông). Hợp nhất Đông Dương Cộng sản Đảng và An Nam Cộng sản Đảng thành Đảng Cộng sản Việt Nam." },
       { type: 'text', content: "Thông qua Cương lĩnh chính trị đầu tiên: 'Tư sản dân quyền cách mạng và thổ địa cách mạng để đi tới xã hội cộng sản'." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Hoi+Nghi+Thanh+Lap+Dang', caption: "Tranh vẽ Hội nghị thành lập Đảng" }
+      { type: 'image', src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpHoM2SvCyl-I0XMxJyEt2Cenwk6JkOElr1g&s', caption: "Tranh vẽ Hội nghị thành lập Đảng" }
     ]
   },
 
@@ -151,7 +155,7 @@ export const timelineData: TimelineItemType[] = [
     details: [
       { type: 'heading', content: "Vụ án Tống Văn Sơ (1931)" },
       { type: 'text', content: "Tháng 6/1931, bị cảnh sát Anh bắt tại Hồng Kông với tên Tống Văn Sơ (Sung Man Cho). Nhờ sự giúp đỡ của luật sư Loseby, Người được thả năm 1932." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Tong+Van+So', caption: "Vụ án Tống Văn Sơ tại Hồng Kông" },
+      { type: 'image', src: 'https://lh6.googleusercontent.com/proxy/e82snq_sN7zDISS4842A2dguhCojOD-gnd_Pvm8YRqOj8bh1M5hRv2KEIFxhzW0LNSRxZ7mfNDIWFiP7VwD78qgKobthGxgElSoWE65Q1A', caption: "Vụ án Tống Văn Sơ tại Hồng Kông" },
 
       { type: 'heading', content: "Những năm tháng ở Liên Xô (1934-1938)" },
       { type: 'text', content: "Sống tại Moscow với tên Lin. Theo học Trường Quốc tế Lênin. Đây là giai đoạn khó khăn khi Người bị Quốc tế Cộng sản phê phán là 'người dân tộc chủ nghĩa' và đánh giá thấp." },
@@ -174,7 +178,7 @@ export const timelineData: TimelineItemType[] = [
       { type: 'text', content: "Ngày 28/1/1941, vượt cột mốc 108 về nước, sống và làm việc tại hang Cốc Bó (Cao Bằng). Đặt tên núi Các Mác, suối Lênin." },
       { type: 'text', content: "Tháng 8/1942, bị chính quyền Tưởng Giới Thạch bắt giam ở Trung Quốc, viết tập thơ 'Nhật ký trong tù' (Ngục trung nhật ký)." },
       { type: 'text', content: "Ngày 2/9/1945, tại Quảng trường Ba Đình, đọc Tuyên ngôn Độc lập, khai sinh nước VNDCCH." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Tuyen+Ngon+Doc+Lap', caption: "Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập" },
+      { type: 'image', src: 'https://hdll.vn/FileUpload/Images/images_64.jpg', caption: "Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập" },
 
       { type: 'heading', content: "Chủ tịch nước & Ngoại giao" },
       { type: 'text', content: "Lãnh đạo kháng chiến chống Pháp với phương châm 'Dĩ bất biến, ứng vạn biến'. Chiến thắng Điện Biên Phủ 1954 chấn động địa cầu." },
@@ -194,7 +198,7 @@ export const timelineData: TimelineItemType[] = [
     details: [
       { type: 'heading', content: "Ngọn đuốc soi đường" },
       { type: 'text', content: "Tư tưởng Hồ Chí Minh đưa cách mạng Việt Nam đi từ thắng lợi này đến thắng lợi khác (Cách mạng Tháng Tám, chiến thắng hai đế quốc to, thống nhất đất nước)." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=Ngay+Thong+Nhat', caption: "Niềm vui chiến thắng ngày thống nhất đất nước" },
+      { type: 'image', src: 'https://dienbientv.vn/dataimages/202204/original/images3144530_1.jpg', caption: "Niềm vui chiến thắng ngày thống nhất đất nước" },
       { type: 'heading', content: "Lấy dân làm gốc" },
       { type: 'text', content: "Tư tưởng 'Nước lấy dân làm gốc', 'Gốc có vững cây mới bền'. Xây dựng nhà nước của dân, do dân, vì dân." }
     ]
@@ -209,7 +213,7 @@ export const timelineData: TimelineItemType[] = [
       { type: 'heading', content: "Anh hùng giải phóng dân tộc" },
       { type: 'text', content: "Năm 1987, UNESCO vinh danh Hồ Chí Minh là 'Anh hùng giải phóng dân tộc và Nhà văn hóa kiệt xuất của Việt Nam'." },
       { type: 'text', content: "Người đã chứng minh chân lý: 'Không có gì quý hơn độc lập, tự do'." },
-      { type: 'image', src: 'https://placehold.co/800x500/e2e8f0/1e293b?text=UNESCO+Vinh+Danh', caption: "Nghị quyết UNESCO vinh danh Chủ tịch Hồ Chí Minh (1987)" }
+      { type: 'image', src: 'https://cdn.nhandan.vn/images/1ef398c4e2fb4bf07980a2ded785b3ef1eea1c7bcc924892efcb6f50ccf84c0a488afa73adea295e10f3f7c96f49a2a663a899dc0d598a8828a44264337440e8/152-6082.jpg', caption: "Nghị quyết UNESCO vinh danh Chủ tịch Hồ Chí Minh (1987)" }
     ]
   }
 ];
