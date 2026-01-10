@@ -1,5 +1,5 @@
-import { ReactNode, useEffect } from "react";
 import Lenis from "lenis";
+import { ReactNode, useEffect } from "react";
 
 interface LenisScrollProps {
   children: ReactNode;

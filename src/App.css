@@ -22,15 +22,22 @@
 }
 
 .hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 50%
+    );
   pointer-events: none;
 }
 
@@ -124,9 +131,7 @@
   align-items: center;
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.08),
-    0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.15s ease-out, border-color 0.15s ease-out;
   scroll-snap-align: start;
   overflow: hidden;
@@ -136,7 +141,7 @@
 }
 
 .event-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -153,17 +158,13 @@
 }
 
 .event-card:hover {
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.15),
-    0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
   border-color: rgba(0, 0, 0, 0.12);
 }
 
 .event-card.is-active {
   border-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 
-    0 24px 80px rgba(0, 0, 0, 0.2),
-    0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .card-background {
@@ -202,7 +203,6 @@
   letter-spacing: -0.01em;
   margin: 0;
 }
-
 
 /* Detail Overlay */
 .detail-overlay {
@@ -399,7 +399,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -409,7 +410,7 @@
 
 /* Parallax Background Elements */
 .events-section::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -10%;
   top: 20%;
@@ -422,7 +423,7 @@
 }
 
 .events-section::after {
-  content: '';
+  content: "";
   position: absolute;
   right: -10%;
   bottom: 20%;
@@ -441,13 +442,18 @@
 
 /* Enhanced Card Hover Effects */
 .event-card::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.1),
+    transparent
+  );
   opacity: 0;
   transition: opacity 0.4s;
 }
