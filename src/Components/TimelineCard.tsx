@@ -10,120 +10,131 @@ interface TimelineCardProps {
 }
 
 export function TimelineCard({ item, index, onClick }: TimelineCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const isEven = index % 2 === 0;
-  
-  // Parallax effect for image
+
+  // 1. Scroll Progress for this specific card
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: containerRef,
     offset: ["start end", "end start"]
   });
+
+  // 2. Parallax Effects (Camille Mormal style)
+  // Image moves slower than scroll to create depth
+  const yImage = useTransform(scrollYProgress, [0, 1], [0, -100]); 
   
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  // Text moves slightly faster to separate layers
+  const yText = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
+  // 3. Reveal Animation (Mask wipe)
+  // Unmask from bottom to top as it enters view
+  const clipPathParams = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
+  const clipPath = useTransform(clipPathParams, (val) => `inset(${val}% 0% 0% 0%)`);
 
   // Extract cover image
   const coverImage = item.details.find(d => d.type === 'image')?.src;
 
   return (
-    <div ref={ref} className="min-h-[80vh] flex items-center justify-center py-20 px-6 md:px-12 relative">
-      
+    <div 
+      ref={containerRef} 
+      className="min-h-[90vh] flex items-center justify-center py-24 px-6 md:px-12 relative overflow-hidden"
+    >
       <div className={`
-        flex flex-col md:flex-row items-center gap-12 md:gap-24 max-w-7xl w-full
+        flex flex-col md:flex-row items-center gap-16 md:gap-32 max-w-7xl w-full
         ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}
       `}>
         
-        {/* Content Side */}
+        {/* TEXT COLUMN */}
         <motion.div 
-          className="flex-1 text-center md:text-left relative z-10"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          style={{ y: yText }} // Parallax on text block
+          className="flex-1 text-center md:text-left relative z-20"
         >
-          {/* Year Badge */}
-          <div className={`
-            inline-block px-4 py-2 border border-vintage-gold/50 rounded-full mb-6
-            bg-vintage-cream/80 backdrop-blur-sm
-            ${!isEven ? 'md:ml-auto' : ''}
-          `}>
-            <span className="font-accent text-vintage-red text-xl tracking-widest font-bold">
-              {item.year}
-            </span>
-          </div>
-
-          <h2 className="font-display text-5xl md:text-7xl text-vintage-black mb-6 leading-[1.1]">
-            {item.title}
-          </h2>
-
-          <div className="w-24 h-1 bg-vintage-gold mb-8 mx-auto md:mx-0" />
-
-          <p className="font-body text-xl text-vintage-brown leading-relaxed mb-8 max-w-lg mx-auto md:mx-0">
-            {item.description}
-          </p>
-
-          <button 
-            onClick={onClick}
-            className="
-              group inline-flex items-center gap-3 px-8 py-3 
-              bg-vintage-black text-vintage-cream 
-              font-display text-lg tracking-widest uppercase
-              hover:bg-vintage-red transition-colors duration-300
-            "
+          {/* Staggered Entry for Typography */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span>Khám phá chi tiết</span>
-            <svg className="w-5 h-5 ml-1 transition-transform group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </button>
+            {/* Decorative Chapter/Year Line */}
+            <div className={`
+              flex items-center gap-4 mb-8 text-vintage-gold/80 font-accent uppercase tracking-[0.2em] text-sm
+              ${!isEven ? 'md:flex-row-reverse' : ''}
+              justify-center md:justify-start
+            `}>
+               <span>Chương {index + 1}</span>
+               <div className="w-12 h-[1px] bg-vintage-gold/50"></div>
+               <span className="text-vintage-red font-bold">{item.year}</span>
+            </div>
+
+            <h2 className="font-display text-6xl md:text-8xl text-vintage-black mb-8 leading-snug tracking-normal">
+              {item.title}
+            </h2>
+
+            <p className="font-body text-xl md:text-2xl text-vintage-brown leading-relaxed mb-10 max-w-lg mx-auto md:mx-0 opacity-90">
+              {item.description}
+            </p>
+
+            <button 
+              onClick={onClick}
+              className="
+                group relative inline-flex items-center gap-4 px-0 py-2
+                font-display text-xl tracking-widest uppercase text-vintage-black
+                overflow-hidden
+              "
+            >
+              <span className="relative z-10">Khám phá</span>
+              <span className="w-8 h-[1px] bg-vintage-black group-hover:w-16 transition-[width] duration-300"></span>
+              {/* Hover effect underline */}
+              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-vintage-black origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"></span>
+            </button>
+          </motion.div>
         </motion.div>
 
-        {/* Visual Side */}
-        <div className="flex-1 w-full relative group cursor-pointer" onClick={onClick}>
+        {/* VISUAL COLUMN */}
+        <div className="flex-1 w-full relative h-[60vh] md:h-[70vh] cursor-pointer group" onClick={onClick}>
+          {/* Reveal Mask Container */}
           <motion.div 
-            style={{ y, opacity }}
-            className="relative aspect-[4/5] w-full max-w-lg mx-auto"
+            style={{ clipPath }} // The specific "wipe" reveal effect
+            className="relative w-full h-full overflow-hidden"
           >
-            {/* Frame border */}
-            <div className={`
-              absolute -inset-4 border-2 border-vintage-gold/30 z-0
-              transition-transform duration-700 group-hover:scale-105
-              ${isEven ? 'translate-x-4 translate-y-4' : '-translate-x-4 translate-y-4'}
-            `} />
-            
-            {/* Image container */}
-            <div className="relative w-full h-full overflow-hidden shadow-2xl bg-vintage-gold/10">
-               {/* Cover Image */}
-               {coverImage ? (
-                <img 
-                  src={coverImage} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
-                />
-               ) : (
-                 <div className="w-full h-full flex items-center justify-center bg-vintage-gold/20 font-display text-6xl text-vintage-gold/40">
-                   {index + 1}
-                 </div>
-               )}
-               
-               {/* View Indicator */}
-               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/50">
-                    <span className="text-white text-3xl font-light">+</span>
-                  </div>
-               </div>
-            </div>
-            
-            {/* Number Background - Parallax Depth */}
-            <div className={`
-              absolute -z-10 top-1/2 -translate-y-1/2 
-              font-display text-[12rem] md:text-[20rem] leading-none 
-              text-vintage-gold/10 select-none pointer-events-none
-              ${isEven ? '-left-20' : '-right-20'}
-            `}>
-              {index + 1}
-            </div>
+             {/* Inner container for Parallax */}
+             <motion.div 
+               style={{ y: yImage, scale: 1.1 }} // Start slightly scaled up and move Y
+               className="relative w-full h-full bg-vintage-gold/5"
+             >
+                {coverImage ? (
+                  <img 
+                    src={coverImage} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover grayscale-[0.2] contrast-[0.95] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+                  />
+                ) : (
+                   <div className="w-full h-full flex items-center justify-center font-display text-9xl text-vintage-gold/20 bg-[#F5F2EB]">
+                     {index + 1}
+                   </div>
+                )}
+                
+                {/* Modern Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
 
+                {/* Hover Reveal Text */}
+                <div className="absolute bottom-8 left-8 z-10 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                   <span className="text-white font-accent text-lg italic tracking-wider">Xem chi tiết &rarr;</span>
+                </div>
+             </motion.div>
+          </motion.div>
+
+          {/* Decorative Number Behind (Parallaxed separately) */}
+          <motion.div 
+             style={{ y: useTransform(scrollYProgress, [0, 1], [-50, 50]) }}
+             className={`
+               absolute -z-10 top-1/2 -translate-y-1/2 
+               font-display text-[15rem] opacity-[0.03] text-black select-none
+               ${isEven ? '-left-24' : '-right-24'}
+             `}
+          >
+            {index + 1}
           </motion.div>
         </div>
 
