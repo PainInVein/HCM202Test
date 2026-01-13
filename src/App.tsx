@@ -18,13 +18,27 @@ function AnimatedRoutes() {
 }
 
 import { ScrollToTop } from "./Components/ScrollToTop";
+import { PresentationProvider } from "./Contexts/PresentationContext";
+import { PresentationControls } from "./Components/PresentationControls";
+
+
+
+import { ReactLenis } from "lenis/react";
+
+import { BackgroundMusic } from "./Components/BackgroundMusic";
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <AnimatedRoutes />
-    </Router>
+    <ReactLenis root options={{ duration: 2.2, smoothWheel: true, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) }}>
+      <Router>
+        <PresentationProvider>
+          <BackgroundMusic />
+          <ScrollToTop />
+          <AnimatedRoutes />
+          <PresentationControls />
+        </PresentationProvider>
+      </Router>
+    </ReactLenis>
   );
 }
 
