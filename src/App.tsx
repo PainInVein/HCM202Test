@@ -22,15 +22,20 @@ import { PresentationProvider } from "./Contexts/PresentationContext";
 import { PresentationControls } from "./Components/PresentationControls";
 
 
+
+import { ReactLenis } from "lenis/react";
+
 function App() {
   return (
-    <Router>
-      <PresentationProvider>
-        <ScrollToTop />
-        <AnimatedRoutes />
-        <PresentationControls />
-      </PresentationProvider>
-    </Router>
+    <ReactLenis root options={{ duration: 2.2, smoothWheel: true, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) }}>
+      <Router>
+        <PresentationProvider>
+          <ScrollToTop />
+          <AnimatedRoutes />
+          <PresentationControls />
+        </PresentationProvider>
+      </Router>
+    </ReactLenis>
   );
 }
 

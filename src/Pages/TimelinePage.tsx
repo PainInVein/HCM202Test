@@ -29,6 +29,32 @@ export function TimelinePage() {
         >
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] mix-blend-multiply" />
           <div className="absolute inset-0 bg-gradient-to-b from-vintage-cream via-transparent to-vintage-cream" />
+          
+          {/* Atmospheric Dust Particles */}
+           <div className="absolute inset-0 overflow-hidden">
+              {[...Array(20)].map((_, i) => (
+                  <motion.div
+                      key={i}
+                      className="absolute rounded-full bg-vintage-gold/30 blur-[1px]"
+                      style={{
+                          left: `${Math.random() * 100}%`,
+                          top: `${Math.random() * 100}%`,
+                          width: Math.random() * 4 + 1 + 'px',
+                          height: Math.random() * 4 + 1 + 'px',
+                      }}
+                      animate={{
+                          y: [0, -100, 0],
+                          x: [0, Math.random() * 50 - 25, 0],
+                          opacity: [0, 0.8, 0]
+                      }}
+                      transition={{
+                          duration: Math.random() * 10 + 10,
+                          repeat: Infinity,
+                          ease: "linear"
+                      }}
+                  />
+              ))}
+           </div>
         </motion.div>
 
         {/* Floating/Fixed Navigation (Minimal) */}
