@@ -82,27 +82,30 @@ export function DetailPage() {
                 switch (detail.type) {
                   case 'heading':
                     return (
-                      <h3 key={idx} className="font-display text-3xl md:text-4xl text-vintage-red mt-16 mb-8 uppercase tracking-wide text-center">
+                      <h3 key={idx} id={`detail-${idx}`} className="font-display text-3xl md:text-4xl text-vintage-red mt-16 mb-8 uppercase tracking-wide text-center scroll-mt-32">
                         {detail.content}
                       </h3>
                     );
+
                   case 'text':
                     return (
-                      <p key={idx} className="font-body text-lg md:text-xl leading-8 text-justify text-vintage-black/90 indent-8 mb-6">
+                      <p key={idx} id={`detail-${idx}`} className="font-body text-lg md:text-xl leading-8 text-justify text-vintage-black/90 indent-8 mb-6 scroll-mt-32">
                         {detail.content}
                       </p>
                     );
+
                   case 'quote':
                     return (
-                      <blockquote key={idx} className="my-16 relative py-8 px-12 border-y-2 border-vintage-gold/30">
+                      <blockquote key={idx} id={`detail-${idx}`} className="my-16 relative py-8 px-12 border-y-2 border-vintage-gold/30 scroll-mt-32">
                          <p className="font-display text-2xl md:text-3xl text-center italic text-vintage-brown">
                            “{detail.content}”
                          </p>
                       </blockquote>
                     );
+
                   case 'image':
                     return (
-                      <figure key={idx} className="my-16 group">
+                      <figure key={idx} id={`detail-${idx}`} className="my-16 group scroll-mt-32">
                         <div className="relative overflow-hidden shadow-lg border-8 border-white bg-white rotate-1 hover:rotate-0 transition-transform duration-500">
                           <img src={detail.src} alt={detail.caption} className="w-full h-auto sepia-[0.2] group-hover:sepia-0 transition-all duration-700" />
                           <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.1)] pointer-events-none"></div>
@@ -114,9 +117,10 @@ export function DetailPage() {
                         )}
                       </figure>
                     );
+
                   case 'video':
                     return (
-                      <div key={idx} className="my-16">
+                      <div key={idx} id={`detail-${idx}`} className="my-16 scroll-mt-32">
                         <div className="relative pt-[56.25%] shadow-lg border-4 border-vintage-gold/20">
                           <iframe 
                             className="absolute inset-0 w-full h-full"
@@ -135,7 +139,7 @@ export function DetailPage() {
                     );
                   case 'link':
                     return (
-                      <div key={idx} className="my-12 flex justify-center">
+                      <div key={idx} id={`detail-${idx}`} className="my-12 flex justify-center scroll-mt-32">
                         <a 
                           href={detail.content} 
                           target="_blank" 
@@ -149,6 +153,7 @@ export function DetailPage() {
                         </a>
                       </div>
                     );
+
                   default: return null;
                 }
               })}

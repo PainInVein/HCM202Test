@@ -18,12 +18,18 @@ function AnimatedRoutes() {
 }
 
 import { ScrollToTop } from "./Components/ScrollToTop";
+import { PresentationProvider } from "./Contexts/PresentationContext";
+import { PresentationControls } from "./Components/PresentationControls";
+
 
 function App() {
   return (
     <Router>
-      <ScrollToTop />
-      <AnimatedRoutes />
+      <PresentationProvider>
+        <ScrollToTop />
+        <AnimatedRoutes />
+        <PresentationControls />
+      </PresentationProvider>
     </Router>
   );
 }
