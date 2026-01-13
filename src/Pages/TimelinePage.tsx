@@ -4,6 +4,7 @@ import { TimelineCard } from "../Components/TimelineCard";
 import { timelineData } from "../data/timelineData";
 import { useNavigate } from "react-router-dom";
 import { usePresentation } from "../Contexts/PresentationContext";
+import { TimelineNavigator } from "../Components/TimelineNavigator";
 
 
 export function TimelinePage() {
@@ -58,6 +59,7 @@ export function TimelinePage() {
         </motion.div>
 
         {/* Floating/Fixed Navigation (Minimal) */}
+        <TimelineNavigator />
         <header className="fixed top-0 left-0 w-full z-50 py-8 px-12 mix-blend-difference text-vintage-gold flex justify-between items-center pointer-events-none">
            <span className="font-display text-sm uppercase tracking-widest opacity-80">1890 — 1969</span>
            <div className="font-accent text-xs tracking-[0.3em] opacity-80 uppercase">

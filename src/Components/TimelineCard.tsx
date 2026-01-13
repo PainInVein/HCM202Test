@@ -68,6 +68,7 @@ export function TimelineCard({ item, index, onClick }: TimelineCardProps) {
   return (
     <div 
       ref={containerRef} 
+      id={`timeline-section-${item.id}`}
       className="min-h-[120vh] flex items-center justify-center py-24 px-6 md:px-12 relative overflow-hidden"
     >
       {/* Atmospherics */}
