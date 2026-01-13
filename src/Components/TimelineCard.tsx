@@ -105,7 +105,7 @@ export function TimelineCard({ item, index, onClick }: TimelineCardProps) {
                <span className="text-vintage-red font-bold text-lg">{item.year}</span>
             </div>
 
-            <h2 className="font-display text-7xl md:text-9xl text-vintage-black mb-10 leading-[0.9] tracking-tight mix-blend-darken">
+            <h2 className="font-display text-7xl md:text-9xl text-vintage-black mb-10 leading-[1.15] tracking-tight mix-blend-darken">
               {item.title}
             </h2>
 

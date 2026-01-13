@@ -76,7 +76,7 @@ export function TimelinePage() {
             <p className="font-accent text-vintage-red tracking-[0.4em] uppercase text-sm md:text-base mb-6">
               Không gian văn hóa & Lịch sử
             </p>
-            <h1 className="font-display text-[5rem] md:text-[8rem] lg:text-[10rem] leading-[0.85] text-vintage-black mb-8 mix-blend-multiply">
+            <h1 className="font-display text-[5rem] md:text-[8rem] lg:text-[10rem] leading-[1.15] text-vintage-black mb-8 mix-blend-multiply">
               HỒ CHÍ MINH
             </h1>
             <div className="w-32 h-[2px] bg-vintage-gold mx-auto mb-8"></div>
