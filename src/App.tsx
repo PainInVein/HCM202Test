@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { TimelinePage } from "./Pages/TimelinePage";
 import { DetailPage } from "./Pages/DetailPage";
+import { MuseumPage } from "./Pages/Museum3D/Museum"
 import { AnimatePresence } from "motion/react";
 import "./index.css";
 
@@ -12,6 +13,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<TimelinePage />} />
         <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="/museum" element={<MuseumPage />} />
       </Routes>
     </AnimatePresence>
   );

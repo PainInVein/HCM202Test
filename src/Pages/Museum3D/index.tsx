@@ -1,0 +1,1 @@
+export { MuseumPage } from "./Museum";
