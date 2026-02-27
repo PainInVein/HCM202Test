@@ -1,4 +1,4 @@
-import { KeyboardControls, PointerLockControls, useGLTF } from '@react-three/drei';
+import { KeyboardControls, PointerLockControls, Sky, useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
 import { Leva } from 'leva';
@@ -6,14 +6,17 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type JSX }
 import { Mesh, Object3D } from 'three';
 import { controlMap } from '../../../features/camera-controller/models/controls';
 import { UserCamera } from '../../../features/camera-controller/ui/Camera';
-import { SceneWrapper } from '../../../shared/ui/canvas/SceneWrapper';
-import { MuseumEnvironment } from '../../../features/museum-environment/ui/MuseumEnvironment';
 import { useMuseumSettings } from '../../../features/museum-environment/services/MuseumSettingsStore';
+import { MuseumEnvironment } from '../../../features/museum-environment/ui/MuseumEnvironment';
+import { InteractionHUD } from '../../../features/Museum-interactive/components/InteractionHUD';
+import { PaintingExhibition } from '../../../features/Museum-interactive/components/PaintingExhibition';
+import { PaintingModal } from '../../../features/Museum-interactive/components/PaintingModal';
+import { EXHIBITION_PAINTINGS, type PaintingData } from '../../../features/Museum-interactive/data/exhibitionData';
+import { SceneWrapper } from '../../../shared/ui/canvas/SceneWrapper';
 
-// we only need a single museum model now
 const MUSEUM_MODEL_PATH = '/Models/Museum.glb';
-// (old TABLE_POSITION/DETECTION_RADIUS were removed)
-// helper for loading any GLB that will be rendered visually only
+
+// ─── Visual model loader ────────────────────────────────────────────────
 function VisualModel({ path, ...props }: { path: string } & JSX.IntrinsicElements['group']) {
   const { scene } = useGLTF(path);
   const clone = useMemo(() => {
@@ -57,24 +60,47 @@ function SensitivitySync({ controlsRef }: { controlsRef: React.RefObject<any> })
   return null;
 }
 
+// ─── Ground plane ────────────────────────────────────────────────────────
+function Ground() {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]} receiveShadow>
+      <planeGeometry args={[200, 200]} />
+      <meshStandardMaterial color="#4a6741" roughness={0.9} />
+    </mesh>
+  );
+}
+
+// ─── Sky dome ────────────────────────────────────────────────────────────
+function SkyDome() {
+  return (
+    <Sky
+      distance={450000}
+      sunPosition={[100, 50, 100]}
+      inclination={0.5}
+      azimuth={0.25}
+      turbidity={8}
+      rayleigh={2}
+    />
+  );
+}
+
+// ─── Scene content ───────────────────────────────────────────────────────
 interface MuseumSceneContentProps {
-  onEnterProximity: () => void;
-  onExitProximity: () => void;
-  onInteract: () => void;
+  onOpenPainting: (painting: PaintingData) => void;
+  onActivePaintingChange: (id: string | null) => void;
   isModalOpen: boolean;
   isPaused: boolean;
 }
 
 function MuseumSceneContent({
-  onEnterProximity,
-  onExitProximity,
-  onInteract,
+  onOpenPainting,
+  onActivePaintingChange,
   isModalOpen,
   isPaused,
 }: MuseumSceneContentProps) {
   const controlsRef = useRef<any>(null);
 
-  // Handle lock/unlock without remounting — prevents camera jitter
+  // Handle lock/unlock without remounting
   useEffect(() => {
     if (!controlsRef.current) return;
 
@@ -92,36 +118,36 @@ function MuseumSceneContent({
     <>
       <PointerLockControls ref={controlsRef} selector="#r3f-canvas" />
 
-      {/* Sync FOV and mouse sensitivity at runtime */}
+      {/* Sync FOV and mouse sensitivity */}
       <FovSync />
       <SensitivitySync controlsRef={controlsRef} />
+
+      {/* Sky & Ground */}
+      <SkyDome />
+      <Ground />
 
       <Suspense fallback={null}>
         <Physics gravity={[0, -9.8, 0]}>
 
-          {/* Môi trường & Ánh sáng */}
+          {/* Lighting & Environment */}
           <MuseumEnvironment enableControls={false} levaHidden={true} />
 
-          {/* Player camera — always mounted, freezes when paused */}
+          {/* Player camera — starts in FRONT of the museum (z = 30) */}
           <UserCamera frozen={isPaused || isModalOpen} />
 
-
-          {/* ═══ Sàn nhà ═══ */}
+          {/* Floor collider */}
           <RigidBody type="fixed" position={[0, -0.05, 0]} colliders={false}>
-            <CuboidCollider args={[50, 0.05, 50]} />
+            <CuboidCollider args={[100, 0.05, 100]} />
           </RigidBody>
 
-          {/* museum model (visual only)
-               make sure the glb is accessible via public/Models/Museum.glb */}
+          {/* Museum 3D model (visual only) */}
           <VisualModel scale={20} path={MUSEUM_MODEL_PATH} />
 
-          {/* optional fixed collider if the glb doesn't include one
-              -- uncomment the section below and adjust size/position */}
-          {false && (
-            <RigidBody type="fixed" colliders={false}>
-              <CuboidCollider args={[10, 2, 10]} position={[0, 1, 0]} />
-            </RigidBody>
-          )}
+          {/* ═══ Painting Exhibition on circular wall ═══ */}
+          <PaintingExhibition
+            onOpenPainting={onOpenPainting}
+            onActivePaintingChange={onActivePaintingChange}
+          />
 
         </Physics>
       </Suspense>
@@ -129,37 +155,34 @@ function MuseumSceneContent({
   );
 }
 
+// ─── Main Museum Page ────────────────────────────────────────────────────
 export interface MuseumSceneProps {
   isPaused?: boolean;
   onPause?: () => void;
 }
 
 export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
-  // drop experiment store hooks for now; museum doesn't need proximity logic until
-  // you add interactable exhibits later
-  const [showPrompt, setShowPrompt] = useState(false);
+  const [modalPainting, setModalPainting] = useState<PaintingData | null>(null);
+  const [activePaintingId, setActivePaintingId] = useState<string | null>(null);
+  const isModalOpen = modalPainting !== null;
 
-  const handleEnterProximity = () => setShowPrompt(true);
-  const handleExitProximity = () => setShowPrompt(false);
+  const handleOpenPainting = useCallback((painting: PaintingData) => {
+    setModalPainting(painting);
+  }, []);
 
-  // ESC → pause (only when playing)
-  // const handleKeyDown = useCallback((e: KeyboardEvent) => {
-  //   if (e.key === 'Escape' && onPause && !isModalOpen) {
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //     document.exitPointerLock();
-  //     onPause();
-  //   }
-  // }, [onPause, isModalOpen]);
+  const handleClosePainting = useCallback(() => {
+    setModalPainting(null);
+  }, []);
 
-    const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape' && onPause) {
+  // ESC → pause (only when playing and no modal open)
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape' && onPause && !isModalOpen) {
       e.preventDefault();
       e.stopPropagation();
       document.exitPointerLock();
       onPause();
     }
-  }, [onPause]);
+  }, [onPause, isModalOpen]);
 
   useEffect(() => {
     if (!isPaused) {
@@ -168,19 +191,14 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
     }
   }, [isPaused, handleKeyDown]);
 
-  // useEffect(() => {
-  //   if (isModalOpen || isPaused) {
-  //     document.exitPointerLock();
-  //     document.body.style.cursor = 'auto';
-  //   }
-  // }, [isModalOpen, isPaused]);
-
-    useEffect(() => {
+  useEffect(() => {
     if (isPaused) {
       document.exitPointerLock();
       document.body.style.cursor = 'auto';
     }
   }, [isPaused]);
+
+
 
   return (
     <>
@@ -189,14 +207,22 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
       <KeyboardControls map={controlMap}>
         <SceneWrapper hideOverlay={true}>
           <MuseumSceneContent
-            onEnterProximity={handleEnterProximity}
-            onExitProximity={handleExitProximity}
-            onInteract={() => { /* future museum interactions */ }}
-            isModalOpen={false}
+            onOpenPainting={handleOpenPainting}
+            onActivePaintingChange={setActivePaintingId}
+            isModalOpen={isModalOpen}
             isPaused={isPaused}
           />
         </SceneWrapper>
       </KeyboardControls>
+
+      {/* Painting detail modal (HTML overlay) */}
+      <PaintingModal painting={modalPainting} onClose={handleClosePainting} />
+
+      {/* "Press F" HUD when near a painting */}
+      <InteractionHUD
+        visible={!!activePaintingId && !isModalOpen}
+        paintingTitle={activePaintingId ? EXHIBITION_PAINTINGS.find(p => p.id === activePaintingId)?.title : undefined}
+      />
     </>
   );
 };

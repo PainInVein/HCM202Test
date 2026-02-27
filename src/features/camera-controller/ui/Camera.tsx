@@ -1,39 +1,50 @@
 // features/camera-controller/ui/PlayerController.tsx
 import { useKeyboardControls } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
-import { CapsuleCollider, RapierRigidBody, RigidBody, useRapier } from '@react-three/rapier';
+import { CapsuleCollider, RapierRigidBody, RigidBody } from '@react-three/rapier';
 import { useRef } from 'react';
 import { Vector3 } from 'three';
-import type { ControlsState } from '../models/controls';
 import { useMuseumSettings } from '../../museum-environment/services/MuseumSettingsStore';
+import type { ControlsState } from '../models/controls';
 
 const VELOCITY_DEAD_ZONE = 0.001;
 
 interface UserCameraProps {
   frozen?: boolean;
+  startPosition?: [number, number, number];
 }
 
-export const UserCamera = ({ frozen = false }: UserCameraProps) => {
+export const UserCamera = ({ frozen = false, startPosition = [0, 3, 30] }: UserCameraProps) => {
   const { camera } = useThree();
   const [, get] = useKeyboardControls<ControlsState>();
   const rigidBodyRef = useRef<RapierRigidBody>(null);
-  const { world } = useRapier();
 
   // Vectors — created once to avoid GC pressure
   const moveDir = useRef(new Vector3());
   const frontV = useRef(new Vector3());
   const sideV = useRef(new Vector3());
+  const worldDir = useRef(new Vector3());
+  const hasInitialized = useRef(false);
 
   useFrame(() => {
     const rb = rigidBodyRef.current;
     if (!rb) return;
 
+    // Set initial look direction on first frame — look straight at the museum
+    if (!hasInitialized.current) {
+      hasInitialized.current = true;
+      const pos = rb.translation();
+      camera.position.set(pos.x, pos.y + 0.3, pos.z);
+      // Look horizontally toward the museum (toward -Z direction)
+      camera.lookAt(pos.x, pos.y + 0.3, pos.z - 10);
+    }
+
     // Read configurable settings
-    const { movementSpeed, sprintMultiplier, jumpForce } = useMuseumSettings.getState();
+    const { movementSpeed, sprintMultiplier } = useMuseumSettings.getState();
 
     // Always keep camera synced to physics body position
     const pos = rb.translation();
-    camera.position.set(pos.x, pos.y + 0.8, pos.z);
+    camera.position.set(pos.x, pos.y + 0.3, pos.z);
 
     if (frozen) {
       // Kill horizontal velocity while paused
@@ -42,7 +53,7 @@ export const UserCamera = ({ frozen = false }: UserCameraProps) => {
       return;
     }
 
-    const { forward, backward, left, right, jump, sprint } = get();
+    const { forward, backward, left, right, sprint } = get();
     const vel = rb.linvel();
 
     // Check if any movement key is pressed
@@ -58,6 +69,15 @@ export const UserCamera = ({ frozen = false }: UserCameraProps) => {
       const side = sideV.current;
       const dir = moveDir.current;
 
+      // Get camera's forward direction projected onto the XZ plane
+      // This avoids the Euler pitch leaking into horizontal movement (prevents drift)
+      camera.getWorldDirection(worldDir.current);
+      worldDir.current.y = 0;
+      worldDir.current.normalize();
+
+      // Calculate the Y-axis rotation angle from the projected forward direction
+      const yAngle = Math.atan2(-worldDir.current.x, -worldDir.current.z);
+
       // Front/back: negative Z = forward in Three.js
       front.set(0, 0, (backward ? 1 : 0) - (forward ? 1 : 0));
       // Left/right: positive X = right
@@ -68,9 +88,14 @@ export const UserCamera = ({ frozen = false }: UserCameraProps) => {
       // Normalize to prevent faster diagonal movement, then apply speed
       if (dir.lengthSq() > VELOCITY_DEAD_ZONE) {
         dir.normalize().multiplyScalar(speed);
-        // Rotate direction by camera's Y rotation only (horizontal plane)
-        dir.applyEuler(camera.rotation);
-        // Zero out any vertical component from camera pitch
+        // Rotate direction only around Y axis (horizontal plane)
+        // Correct Y-axis rotation matrix: x' = x*cos + z*sin, z' = -x*sin + z*cos
+        const sinY = Math.sin(yAngle);
+        const cosY = Math.cos(yAngle);
+        const nx = dir.x * cosY + dir.z * sinY;
+        const nz = -dir.x * sinY + dir.z * cosY;
+        dir.x = nx;
+        dir.z = nz;
         dir.y = 0;
 
         rb.setLinvel({ x: dir.x, y: vel.y, z: dir.z }, true);
@@ -79,21 +104,7 @@ export const UserCamera = ({ frozen = false }: UserCameraProps) => {
       }
     }
 
-    // Jump — only when grounded (raycast down)
-    if (jump) {
-      const origin = rb.translation();
-      const ray = world.castRay(
-        {
-          origin: { x: origin.x, y: origin.y, z: origin.z },
-          dir: { x: 0, y: -1, z: 0 },
-        } as any,
-        1.1,
-        true
-      );
-      if (ray) {
-        rb.setLinvel({ x: vel.x, y: jumpForce, z: vel.z }, true);
-      }
-    }
+    // Jump disabled
   });
 
   return (
@@ -102,7 +113,7 @@ export const UserCamera = ({ frozen = false }: UserCameraProps) => {
       colliders={false}
       mass={1}
       type="dynamic"
-      position={[0, 3, 0]}
+      position={startPosition}
       enabledRotations={[false, false, false]}
       linearDamping={0.5}
       friction={1}

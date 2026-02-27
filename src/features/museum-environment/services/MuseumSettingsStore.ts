@@ -44,7 +44,7 @@ const DEFAULT_SETTINGS: MuseumSettings = {
     jumpForce: 5,
 
     // Camera
-    mouseSensitivity: 1,
+    mouseSensitivity: 0.35,
     fov: 50,
     invertY: false,
 

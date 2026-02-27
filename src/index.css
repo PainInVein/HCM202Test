@@ -7,7 +7,7 @@
   --font-display: "Playfair Display", serif;
   --font-body: "Lora", serif;
   --font-accent: "Cormorant Garamond", serif;
-  
+
   --color-vintage-cream: #f4ECE1;
   --color-vintage-gold: #C5A059;
   --color-vintage-red: #8B2E2E;
@@ -33,11 +33,16 @@ html.lenis body {
 @layer base {
   body {
     @apply antialiased text-base bg-vintage-cream text-vintage-black font-body;
-    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png"); 
+    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
     background-blend-mode: multiply;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display;
   }
 }
@@ -47,9 +52,34 @@ html.lenis body {
   height: 8px;
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   @apply bg-vintage-gold/50 rounded-full hover:bg-vintage-gold;
+}
+
+/* ── Museum Painting Modal/HUD Animations ── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
