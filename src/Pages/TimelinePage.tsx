@@ -84,18 +84,33 @@ export function TimelinePage() {
             "Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ!"
           </p>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/museum')}
-            className="
-                group relative inline-flex items-center gap-3 px-8 py-4 
-                bg-vintage-red text-white font-display uppercase tracking-widest text-sm shadow-xl hover:shadow-2xl hover:bg-red-800 transition-all
-              "
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-80"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
-            <span>Tham Quan Bảo Tàng 3D</span>
-          </motion.button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/museum')}
+              className="
+                  group relative inline-flex items-center gap-3 px-8 py-4 
+                  bg-vintage-red text-white font-display uppercase tracking-widest text-sm shadow-xl hover:shadow-2xl hover:bg-red-800 transition-all
+                "
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-80"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+              <span>Tham Quan Bảo Tàng 3D</span>
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/chat')}
+              className="
+                  group relative inline-flex items-center gap-3 px-8 py-4 
+                  bg-vintage-gold/90 text-vintage-black font-display uppercase tracking-widest text-sm shadow-xl hover:shadow-2xl hover:bg-vintage-gold transition-all
+                "
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-80"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+              <span>Hỏi AI Lịch Sử</span>
+            </motion.button>
+          </div>
         </motion.div>
 
         {/* Scroll Indicator */}

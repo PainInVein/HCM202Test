@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { TimelinePage } from "./Pages/TimelinePage";
-import { DetailPage } from "./Pages/DetailPage";
-import { MuseumPage } from "./Pages/Museum3D/Museum"
 import { AnimatePresence } from "motion/react";
+import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import "./index.css";
+import { ChatPage } from "./Pages/ChatPage";
+import { DetailPage } from "./Pages/DetailPage";
+import { MuseumPage } from "./Pages/Museum3D/Museum";
+import { TimelinePage } from "./Pages/TimelinePage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -14,14 +15,15 @@ function AnimatedRoutes() {
         <Route path="/" element={<TimelinePage />} />
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="/museum" element={<MuseumPage />} />
+        <Route path="/chat" element={<ChatPage />} />
       </Routes>
     </AnimatePresence>
   );
 }
 
+import { PresentationControls } from "./Components/PresentationControls";
 import { ScrollToTop } from "./Components/ScrollToTop";
 import { PresentationProvider } from "./Contexts/PresentationContext";
-import { PresentationControls } from "./Components/PresentationControls";
 
 
 
