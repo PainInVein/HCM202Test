@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY as string;
 
-// ─── System prompt built from timelineData ───────────────────────────────
+// ─── System prompt built from timelineData ──────────────────────────────
 const SYSTEM_PROMPT = `Bạn là một chuyên gia lịch sử Đảng Cộng sản Việt Nam, chuyên sâu về giai đoạn 1945-1954 (Bảo vệ chính quyền và Kháng chiến chống Pháp). Bạn có kiến thức sâu rộng và trả lời bằng tiếng Việt, giọng văn trang trọng nhưng dễ hiểu, phù hợp với sinh viên đại học.
 
 Dưới đây là toàn bộ kiến thức nền tảng của bạn:
