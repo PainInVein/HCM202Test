@@ -14,7 +14,7 @@ export interface PaintingData {
 // ── Wall geometry constants ──
 // The museum model is loaded at scale=20. The circular inner wall (gray/beige
 // section near the floor) has these approximate dimensions:
-export const WALL_RADIUS = 8.3;        // distance from center — paintings in middle of exhibition hall
+export const WALL_RADIUS = 11.2;        // distance from center — paintings in middle of exhibition hall
 export const WALL_CENTER: [number, number, number] = [0.5, 0, -3.5];
 export const PAINTING_WIDTH = 3.2;     // default painting width in world units
 export const PAINTING_HEIGHT = 2.4;    // default painting height (adjusted to fit wall)
@@ -27,8 +27,8 @@ const DEFAULT_HEIGHT = 1.8;
 // Entrance is roughly at angle=0 (positive Z direction), so we place
 // paintings from ~40° to ~320° (0.7 rad to 5.6 rad)
 const TOTAL_PAINTINGS = 14;
-const START_ANGLE = 0.37;               // ~40 degrees (past entrance)
-const END_ANGLE = 6;                 // ~320 degrees (before entrance)
+const START_ANGLE = 0.6;               // ~40 degrees (past entrance)
+const END_ANGLE = 5.7;                 // ~320 degrees (before entrance)
 
 function angleForIndex(i: number): number {
     return START_ANGLE + (END_ANGLE - START_ANGLE) * (i / (TOTAL_PAINTINGS - 1));

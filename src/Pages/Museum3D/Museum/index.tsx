@@ -1,19 +1,19 @@
 import { KeyboardControls, PointerLockControls, Sky, useGLTF } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
-import { Leva } from 'leva';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type JSX } from 'react';
 import { Mesh, Object3D } from 'three';
 import { controlMap } from '../../../features/camera-controller/models/controls';
+import type { UserCameraHandle } from '../../../features/camera-controller/ui/Camera';
 import { UserCamera } from '../../../features/camera-controller/ui/Camera';
 import { useMuseumSettings } from '../../../features/museum-environment/services/MuseumSettingsStore';
 import { MuseumEnvironment } from '../../../features/museum-environment/ui/MuseumEnvironment';
 import { InteractionHUD } from '../../../features/Museum-interactive/components/InteractionHUD';
+import { MuseumInfoPanel } from '../../../features/Museum-interactive/components/MuseumInfoPanel';
 import { PaintingExhibition } from '../../../features/Museum-interactive/components/PaintingExhibition';
 import { PaintingModal } from '../../../features/Museum-interactive/components/PaintingModal';
-import { EXHIBITION_PAINTINGS, type PaintingData } from '../../../features/Museum-interactive/data/exhibitionData';
+import { EXHIBITION_PAINTINGS, WALL_CENTER, type PaintingData } from '../../../features/Museum-interactive/data/exhibitionData';
 import { SceneWrapper } from '../../../shared/ui/canvas/SceneWrapper';
-
 const MUSEUM_MODEL_PATH = '/Models/Museum.glb';
 
 // ─── Visual model loader ────────────────────────────────────────────────
@@ -90,6 +90,8 @@ interface MuseumSceneContentProps {
   onActivePaintingChange: (id: string | null) => void;
   isModalOpen: boolean;
   isPaused: boolean;
+  cameraRef: React.RefObject<UserCameraHandle | null>;
+  onPlayerPositionUpdate: (x: number, y: number, z: number) => void;
 }
 
 function MuseumSceneContent({
@@ -97,6 +99,8 @@ function MuseumSceneContent({
   onActivePaintingChange,
   isModalOpen,
   isPaused,
+  cameraRef,
+  onPlayerPositionUpdate,
 }: MuseumSceneContentProps) {
   const controlsRef = useRef<any>(null);
 
@@ -130,10 +134,10 @@ function MuseumSceneContent({
         <Physics gravity={[0, -9.8, 0]}>
 
           {/* Lighting & Environment */}
-          <MuseumEnvironment enableControls={false} levaHidden={true} />
+          <MuseumEnvironment enableControls={false} />
 
-          {/* Player camera — starts in FRONT of the museum (z = 30) */}
-          <UserCamera frozen={isPaused || isModalOpen} />
+          {/* Player camera — starts in FRONT of the museum (z = 33) */}
+          <UserCamera ref={cameraRef} frozen={isPaused || isModalOpen} onPositionUpdate={onPlayerPositionUpdate} />
 
           {/* Floor collider */}
           <RigidBody type="fixed" position={[0, -0.05, 0]} colliders={false}>
@@ -141,7 +145,7 @@ function MuseumSceneContent({
           </RigidBody>
 
           {/* Museum 3D model (visual only) */}
-          <VisualModel scale={20} path={MUSEUM_MODEL_PATH} />
+          <VisualModel scale={25} path={MUSEUM_MODEL_PATH} />
 
           {/* ═══ Painting Exhibition on circular wall ═══ */}
           <PaintingExhibition
@@ -164,7 +168,20 @@ export interface MuseumSceneProps {
 export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
   const [modalPainting, setModalPainting] = useState<PaintingData | null>(null);
   const [activePaintingId, setActivePaintingId] = useState<string | null>(null);
+  const [nearMuseum, setNearMuseum] = useState(false);
   const isModalOpen = modalPainting !== null;
+  const cameraRef = useRef<UserCameraHandle>(null);
+  const hasEnteredMuseum = useRef(false);
+
+  // Museum entrance detection — museum is at origin, detect when player is within range
+  const MUSEUM_ENTRANCE_DISTANCE = 28;
+  const INSIDE_DISTANCE = 8;
+
+  const handlePlayerPositionUpdate = useCallback((x: number, _y: number, z: number) => {
+    if (hasEnteredMuseum.current) return; // Already entered, never show again
+    const dist = Math.sqrt(x * x + z * z);
+    setNearMuseum(dist < MUSEUM_ENTRANCE_DISTANCE && dist > INSIDE_DISTANCE);
+  }, []);
 
   const handleOpenPainting = useCallback((painting: PaintingData) => {
     setModalPainting(painting);
@@ -174,7 +191,7 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
     setModalPainting(null);
   }, []);
 
-  // ESC → pause (only when playing and no modal open)
+  // ESC → pause; F → teleport into museum when near
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape' && onPause && !isModalOpen) {
       e.preventDefault();
@@ -182,7 +199,14 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
       document.exitPointerLock();
       onPause();
     }
-  }, [onPause, isModalOpen]);
+    // F key → teleport into museum center
+    if ((e.key === 'f' || e.key === 'F') && nearMuseum && !isModalOpen) {
+      const [cx, , cz] = WALL_CENTER;
+      cameraRef.current?.teleportTo(cx, 3, cz);
+      hasEnteredMuseum.current = true;
+      setNearMuseum(false);
+    }
+  }, [onPause, isModalOpen, nearMuseum]);
 
   useEffect(() => {
     if (!isPaused) {
@@ -202,7 +226,6 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
 
   return (
     <>
-      <Leva hidden />
 
       <KeyboardControls map={controlMap}>
         <SceneWrapper hideOverlay={true}>
@@ -211,6 +234,8 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
             onActivePaintingChange={setActivePaintingId}
             isModalOpen={isModalOpen}
             isPaused={isPaused}
+            cameraRef={cameraRef}
+            onPlayerPositionUpdate={handlePlayerPositionUpdate}
           />
         </SceneWrapper>
       </KeyboardControls>
@@ -220,9 +245,12 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
 
       {/* "Press F" HUD when near a painting */}
       <InteractionHUD
-        visible={!!activePaintingId && !isModalOpen}
+        visible={!!activePaintingId && !isModalOpen && !nearMuseum}
         paintingTitle={activePaintingId ? EXHIBITION_PAINTINGS.find(p => p.id === activePaintingId)?.title : undefined}
       />
+
+      {/* Museum entrance info panel */}
+      <MuseumInfoPanel visible={nearMuseum && !isModalOpen && !isPaused} />
     </>
   );
 };

@@ -2,22 +2,38 @@
 import { useKeyboardControls } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { CapsuleCollider, RapierRigidBody, RigidBody } from '@react-three/rapier';
-import { useRef } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Vector3 } from 'three';
 import { useMuseumSettings } from '../../museum-environment/services/MuseumSettingsStore';
 import type { ControlsState } from '../models/controls';
 
 const VELOCITY_DEAD_ZONE = 0.001;
 
+export interface UserCameraHandle {
+  teleportTo: (x: number, y: number, z: number) => void;
+}
+
 interface UserCameraProps {
   frozen?: boolean;
   startPosition?: [number, number, number];
+  onPositionUpdate?: (x: number, y: number, z: number) => void;
 }
 
-export const UserCamera = ({ frozen = false, startPosition = [0, 3, 30] }: UserCameraProps) => {
+export const UserCamera = forwardRef<UserCameraHandle, UserCameraProps>(({ frozen = false, startPosition = [0, 3, 33], onPositionUpdate }, ref) => {
   const { camera } = useThree();
   const [, get] = useKeyboardControls<ControlsState>();
   const rigidBodyRef = useRef<RapierRigidBody>(null);
+
+  // Expose teleport method
+  useImperativeHandle(ref, () => ({
+    teleportTo: (x: number, y: number, z: number) => {
+      const rb = rigidBodyRef.current;
+      if (!rb) return;
+      rb.setTranslation({ x, y, z }, true);
+      rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      camera.position.set(x, y + 0.3, z);
+    },
+  }));
 
   // Vectors — created once to avoid GC pressure
   const moveDir = useRef(new Vector3());
@@ -45,6 +61,11 @@ export const UserCamera = ({ frozen = false, startPosition = [0, 3, 30] }: UserC
     // Always keep camera synced to physics body position
     const pos = rb.translation();
     camera.position.set(pos.x, pos.y + 0.3, pos.z);
+
+    // Report position for proximity detection
+    if (onPositionUpdate) {
+      onPositionUpdate(pos.x, pos.y, pos.z);
+    }
 
     if (frozen) {
       // Kill horizontal velocity while paused
@@ -121,4 +142,4 @@ export const UserCamera = ({ frozen = false, startPosition = [0, 3, 30] }: UserC
       <CapsuleCollider args={[0.75, 0.35]} />
     </RigidBody>
   );
-};
+});
