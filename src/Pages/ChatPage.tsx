@@ -148,8 +148,15 @@ export function ChatPage() {
 
         if (!res.ok) {
             const err = await res.json().catch(() => ({}));
+            console.error('Gemini API Error:', {
+                status: res.status,
+                error: err,
+                keyPresent: !!API_KEY,
+                keyLength: API_KEY?.length,
+                keyPrefix: API_KEY?.substring(0, 8),
+            });
             if (res.status === 400 || res.status === 403) {
-                return '❌ API Key không hợp lệ hoặc hết hạn. Vui lòng kiểm tra lại.';
+                return `❌ API Key không hợp lệ hoặc hết hạn. (Status: ${res.status}, Message: ${err?.error?.message || 'N/A'})`;
             }
             return `❌ Lỗi API (${res.status}): ${err?.error?.message || 'Unknown error'}`;
         }
