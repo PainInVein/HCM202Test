@@ -129,13 +129,26 @@ export function DetailPage() {
                     </figure>
                   );
 
-                case 'video':
+                case 'video': {
+                  const rawUrl = detail.src || detail.content || '';
+                  let embedUrl = rawUrl;
+                  if (rawUrl.includes('youtu.be/')) {
+                    const id = rawUrl.split('youtu.be/')[1].split('?')[0];
+                    embedUrl = `https://www.youtube.com/embed/${id}`;
+                  } else if (rawUrl.includes('youtube.com/watch')) {
+                    try {
+                      const urlObj = new URL(rawUrl);
+                      const v = urlObj.searchParams.get('v');
+                      if (v) embedUrl = `https://www.youtube.com/embed/${v}`;
+                    } catch (e) { }
+                  }
+
                   return (
                     <div key={idx} id={`detail-${idx}`} className="my-16 scroll-mt-32">
-                      <div className="relative pt-[56.25%] shadow-lg border-4 border-vintage-gold/20">
+                      <div className="relative pt-[56.25%] shadow-lg border-4 border-vintage-gold/20 bg-black/5">
                         <iframe
                           className="absolute inset-0 w-full h-full"
-                          src={detail.content}
+                          src={embedUrl}
                           title={detail.caption || "Video"}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
@@ -148,6 +161,7 @@ export function DetailPage() {
                       )}
                     </div>
                   );
+                }
                 case 'link':
                   return (
                     <div key={idx} id={`detail-${idx}`} className="my-12 flex justify-center scroll-mt-32">

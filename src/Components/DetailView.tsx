@@ -13,8 +13,8 @@ export function DetailView({ item, index, onClose }: DetailViewProps) {
       case 'heading':
         return (
           <div key={idx} className="mt-12 mb-6 flex items-center gap-4">
-             <div className="h-[1px] flex-1 bg-vintage-gold/30"></div>
-             <h4 className="font-display font-bold text-2xl md:text-3xl text-vintage-red tracking-wide uppercase text-center">
+            <div className="h-[1px] flex-1 bg-vintage-gold/30"></div>
+            <h4 className="font-display font-bold text-2xl md:text-3xl text-vintage-red tracking-wide uppercase text-center">
               {detail.content}
             </h4>
             <div className="h-[1px] flex-1 bg-vintage-gold/30"></div>
@@ -24,9 +24,9 @@ export function DetailView({ item, index, onClose }: DetailViewProps) {
         return (
           <div key={idx} className="my-12">
             <figure className="relative p-2 bg-white shadow-md border border-gray-200 rotate-1 transition-transform hover:rotate-0 hover:scale-[1.01] duration-500 ease-out">
-              <img 
-                src={detail.src} 
-                alt={detail.caption || detail.content} 
+              <img
+                src={detail.src}
+                alt={detail.caption || detail.content}
                 className="w-full h-auto object-cover max-h-[60vh] sepia-[0.3]"
               />
               {detail.caption && (
@@ -47,6 +47,39 @@ export function DetailView({ item, index, onClose }: DetailViewProps) {
             <span className="absolute bottom-2 right-2 text-4xl text-vintage-gold/40 font-serif">”</span>
           </blockquote>
         );
+      case 'video': {
+        const rawUrl = detail.src || detail.content || '';
+        let embedUrl = rawUrl;
+        if (rawUrl.includes('youtu.be/')) {
+          const id = rawUrl.split('youtu.be/')[1].split('?')[0];
+          embedUrl = `https://www.youtube.com/embed/${id}`;
+        } else if (rawUrl.includes('youtube.com/watch')) {
+          try {
+            const urlObj = new URL(rawUrl);
+            const v = urlObj.searchParams.get('v');
+            if (v) embedUrl = `https://www.youtube.com/embed/${v}`;
+          } catch (e) { }
+        }
+
+        return (
+          <div key={idx} className="my-12">
+            <div className="relative pt-[56.25%] shadow-lg border-[3px] border-vintage-gold/30 bg-black/5 text-center">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src={embedUrl}
+                title={detail.caption || "Video"}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            {detail.caption && (
+              <p className="text-center font-accent text-sm tracking-widest text-vintage-brown/60 mt-4 uppercase">
+                Video: {detail.caption}
+              </p>
+            )}
+          </div>
+        );
+      }
       default: // text
         return (
           <p key={idx} className="text-lg md:text-xl leading-8 text-vintage-black/90 font-body mb-6 text-justify indent-0 first-letter:text-5xl first-letter:font-display first-letter:float-left first-letter:mr-3 first-letter:text-vintage-gold first-letter:mt-[-5px]">
@@ -87,7 +120,7 @@ export function DetailView({ item, index, onClose }: DetailViewProps) {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none z-0" />
 
         <div className="relative z-10 w-full h-full overflow-y-auto custom-scrollbar p-8 md:p-16 lg:p-20">
-          
+
           {/* Close Button */}
           <button
             onClick={onClose}
@@ -102,9 +135,9 @@ export function DetailView({ item, index, onClose }: DetailViewProps) {
               {item.year}
             </span>
             <div className="inline-block border-y border-vintage-black/10 py-2 mb-6">
-               <span className="font-accent text-vintage-brown/60 text-sm tracking-widest uppercase">
-                 Chương {index + 1}
-               </span>
+              <span className="font-accent text-vintage-brown/60 text-sm tracking-widest uppercase">
+                Chương {index + 1}
+              </span>
             </div>
             <h1 className="font-display text-5xl md:text-7xl text-vintage-black mb-6 leading-none">
               {item.title}
@@ -124,7 +157,7 @@ export function DetailView({ item, index, onClose }: DetailViewProps) {
             <div className="w-1/2 h-[1px] bg-vintage-black"></div>
             <span className="font-display text-2xl text-vintage-black">❦</span>
           </div>
-          
+
         </div>
       </motion.div>
     </motion.div>

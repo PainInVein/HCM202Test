@@ -94,6 +94,21 @@ export const timelineData: TimelineItemType[] = [
         narrative: "Đây là văn kiện pháp lý quốc tế vô giá, phủ nhận hoàn toàn tính chính danh của Pháp và Nhật tại Đông Dương, đặt nền móng vững chắc cho thể chế dân chủ cộng hòa."
       },
       {
+        type: 'text',
+        content: "Cách mạng tháng Tám thành công, ngày 2/9/1945 tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc Bản Tuyên Ngôn Độc lập khai sinh ra nước Việt Nam Dân chủ Cộng Hòa, chấm dứt gần 100 năm ách đô hộ của Thực dân Pháp tại Việt Nam.",
+        narrative: "Đánh dấu chấm dứt gần 100 năm ách đô hộ của Thực dân Pháp."
+      },
+      {
+        type: 'image',
+        src: 'https://photo-cms-vovworld.zadn.vn/w500/uploaded/vovworld/jcqpivou/2021_08_31/4_ecat.jpg',
+        caption: "Quang cảnh Lễ Độc lập tại Quảng trường Ba Đình ngày 2/9/1945"
+      },
+      {
+        type: 'image',
+        src: 'https://th.bing.com/th/id/R.b85062a24004370d22945ab7f9908505?rik=JzLthFrCjlN81Q&riu=http%3a%2f%2fredsvn.net%2fwp-content%2fuploads%2f2019%2f09%2f01-14248488642466.jpg&ehk=6Q2wthgEeEP77r1BLVzwZublXksl%2bYl3sMbpHK%2fT5vI%3d&risl=&pid=ImgRaw&r=0',
+        caption: "Lễ mừng Độc Lập tại Sài Gòn chiều ngày 2/9/1945"
+      },
+      {
         type: 'heading',
         content: "23/9/1945 - Pháp xâm lược lần thứ hai"
       },
@@ -101,6 +116,21 @@ export const timelineData: TimelineItemType[] = [
         type: 'text',
         content: "Dựa vào sự dung túng và thả vũ khí của quân đội Anh (lực lượng vào miền Nam giải giáp quân Nhật), thực dân Pháp nổ súng đánh chiếm trụ sở Ủy ban Hành chính Kháng chiến Nam Bộ tại Sài Gòn - Chợ Lớn. Nam Bộ buộc phải đi tiên phong trong kháng chiến vũ trang, trở thành 'Thành đồng Tổ quốc'.",
         narrative: "Nam Bộ buộc phải đi tiên phong trong kháng chiến vũ trang, trở thành 'Thành đồng Tổ quốc', mở đầu cuộc kháng chiến trường kỳ của dân tộc."
+      },
+      {
+        type: 'text',
+        content: "Chính quyền thực dân Pháp âm mưu tái lập sự thống trị ở Việt Nam. Đô đốc Thierry d’Argenlieu được bổ nhiệm làm Cao ủy Đông Dương và tướng Philippe Leclerc được bổ nhiệm làm Tổng tư lệnh lực lượng viễn chinh Pháp ở Viễn Đông với chỉ thị “Khôi phục chủ quyền của Pháp trên toàn lãnh thổ Đông Dương”.",
+        narrative: "Pháp quyết tâm dập tắt nền độc lập non trẻ của nước ta."
+      },
+      {
+        type: 'image',
+        src: 'https://media.gettyimages.com/id/106501494/photo/thierry-dargenlieu-and-general-leclerc-around-1945.jpg?s=1024x1024&w=gi&k=20&c=cXWfNjxgbigcAvH4c0PnIKyffHj4ihEnfcsFCdIWSkY=',
+        caption: "Đô đốc Thierry d’Argenlieu và tướng Philippe Leclerc"
+      },
+      {
+        type: 'image',
+        src: 'https://hcmc-museum.edu.vn/wp-content/uploads/2023/09/TLKHP-1322-90.jpg',
+        caption: "Thanh niên Tiền phong Nam Bộ nô nức tham gia kháng chiến"
       },
       {
         type: 'heading',
@@ -130,6 +160,16 @@ export const timelineData: TimelineItemType[] = [
         narrative: "Việc đưa nhiều nhân sĩ, trí thức ngoài Đảng tham gia bộ máy nhà nước thể hiện tư tưởng đại đoàn kết dân tộc vĩ đại."
       },
       {
+        type: 'text',
+        content: "Ngày 2/3/1946, Quốc hội khóa I nước Việt Nam Dân chủ Cộng Hòa họp kì thứ nhất tại nhà Hát Lớn Hà Nội, Chính Phủ Liên Hiệp kháng chiến do Chủ tịch Hồ Chí Minh đứng đầu đã ra mắt Quốc Hội.",
+        narrative: "Chính phủ Liên hiệp kháng chiến chính thức ra mắt, tập hợp sức mạnh của toàn dân tộc."
+      },
+      {
+        type: 'image',
+        src: 'https://th.bing.com/th/id/R.4979d3d80ec72e3901b0e3fb6251a772?rik=C1XNX4IsMmH8SQ&pid=ImgRaw&r=0',
+        caption: "Chính phủ Liên hiệp kháng chiến do Chủ tịch Hồ Chí Minh đứng đầu ra mắt Quốc hội khóa I"
+      },
+      {
         type: 'heading',
         content: "6/3/1946 - Hiệp định sơ bộ Việt - Pháp"
       },
@@ -146,6 +186,20 @@ export const timelineData: TimelineItemType[] = [
         type: 'text',
         content: "Hội nghị Fontainebleau tại Pháp bế tắc, nguy cơ chiến tranh cận kề. Chủ tịch Hồ Chí Minh ký Tạm ước, nhượng bộ thêm cho Pháp một số quyền lợi kinh tế, văn hóa nhằm kéo dài thời gian hòa bình, tranh thủ vài tháng quý báu để ráo riết chuẩn bị lực lượng.",
         narrative: "Chủ tịch Hồ Chí Minh ký Tạm ước trong tình thế cận kề chiến tranh, nhượng bộ có tính toán để tranh thủ thời gian chuẩn bị lực lượng."
+      },
+      {
+        type: 'heading',
+        content: "3/11/1946 - Thành lập Chính phủ Liên hiệp Quốc dân"
+      },
+      {
+        type: 'text',
+        content: "Ngày 3/11/1946, tại kỳ họp thứ hai Quốc hội khóa I, Chính phủ Liên hiệp Quốc dân do Chủ tịch Hồ Chí Minh đứng đầu ra mắt đồng bào.",
+        narrative: "Một chính phủ phản ánh sức mạnh đại đoàn kết toàn dân tộc nhằm đối phó với những thử thách mới."
+      },
+      {
+        type: 'image',
+        src: 'https://baohagiang.vn/file/dataimages/202111/original/images1498088_106d5225644t27412l0.jpg',
+        caption: "Chính phủ Liên hiệp Quốc dân ra mắt đồng bào (3/11/1946)"
       },
       {
         type: 'heading',
@@ -207,6 +261,21 @@ export const timelineData: TimelineItemType[] = [
       // --- Sự kiện ---
       {
         type: 'heading',
+        content: "Cuối năm 1946 - Đỉnh điểm của những hành động khiêu khích",
+        narrative: "Trong khi ta hết sức nhượng bộ, thực dân Pháp ngày càng lấn tới."
+      },
+      {
+        type: 'text',
+        content: "Thực dân Pháp không ngừng gây hấn, khiêu khích chính quyền Việt Nam, tăng cường đánh phá Nam Bộ, Nam Trung Bộ, lập chính phủ “Nam kỳ tự trị” (1/6/1946), đưa ra tàu chiến đánh chiếm thành phố Hải Phòng ngày 23/11/1946, mở rộng chiến tranh xâm lược ở Bắc Bộ.",
+        narrative: "Những hành động ngang ngược này đã đẩy dân tộc ta đến giới hạn chịu đựng cuối cùng."
+      },
+      {
+        type: 'image',
+        src: 'https://tse3.mm.bing.net/th/id/OIP.E4EybAtoNCP4DfI7MBtdDwHaE4?rs=1&pid=ImgDetMain&o=7&rm=3',
+        caption: "Tàu chiến Pháp đánh chiếm thành phố Hải Phòng (23/11/1946)"
+      },
+      {
+        type: 'heading',
         content: "19/12/1946 - Lời kêu gọi toàn quốc kháng chiến",
         narrative: "Đêm 19 tháng 12 năm 1946, sau tối hậu thư của Pháp đòi tước vũ khí tự vệ thủ đô, Lời kêu gọi toàn quốc kháng chiến vang dội."
       },
@@ -247,6 +316,16 @@ export const timelineData: TimelineItemType[] = [
         content: "Năm 1949, Cách mạng Trung Quốc thành công, Trung Quốc và Liên Xô công nhận ngoại giao nước ta. Pháp lo sợ, thực hiện Kế hoạch Rơ-ve phong tỏa biên giới Việt - Trung. Ta chủ động mở chiến dịch với phương châm 'đánh điểm, diệt viện' (đột phá đồn Đông Khê). Thắng lợi này đập tan vòng vây, khai thông biên giới nhận viện trợ, đánh dấu bước chuyển hướng chiến lược từ phòng ngự sang chủ động tiến công.",
         narrative: "Chiến dịch Biên giới Thu Đông 1950 đánh dấu bước chuyển hướng chiến lược vĩ đại: từ phòng ngự sang chủ động tiến công, khai thông biên giới nhận viện trợ quốc tế."
       },
+      {
+        type: 'text',
+        content: "Lực lượng viễn chinh Pháp bị thất bại nặng nề trong chiến dịch Biên Giới (tháng 9/1950) 8.300 lính Pháp trong đó nhiều sĩ quan chỉ huy chết và bị bắt làm tù binh.",
+        narrative: "Đây là thất bại cay đắng và nặng nề nhất của Pháp kể từ đầu cuộc chiến."
+      },
+      {
+        type: 'image',
+        src: 'https://www.watson.ch/imgdb/1901/Qx,A,0,0,1300,874,541,364,216,145/5760894603343937',
+        caption: "Lực lượng viễn chinh Pháp bị bắt làm tù binh trong Chiến dịch Biên Giới"
+      },
       // --- Nhân vật trọng yếu giai đoạn 1946-1950 ---
       {
         type: 'figures',
@@ -285,6 +364,21 @@ export const timelineData: TimelineItemType[] = [
       },
       {
         type: 'heading',
+        content: "Đầu năm 1951 - Chiến trường Bắc Bộ",
+        narrative: "Cuộc chiến tranh ở Bắc Bộ diễn ra ngày một khốc liệt với sự can thiệp của viện trợ từ nước ngoài."
+      },
+      {
+        type: 'text',
+        content: "Tháng 1/1951, lính “lê dương” của quân viễn chinh Pháp liên tục đi càn ở mặt trận Vĩnh Yên (Bắc Bộ) với vũ khí do Mỹ viện trợ, hòng tìm lại lợi thế trên chiến trường.",
+        narrative: "Pháp gia tăng các cuộc hành quân càn quét hòng lấy lại thế chủ động."
+      },
+      {
+        type: 'image',
+        src: 'https://divulgadoresdelmisterio.net/wp-content/uploads/2022/07/Batalla-de-Vinh-Yen.jpg',
+        caption: "Lính 'lê dương' đi càn ở mặt trận Vĩnh Yên (1/1951)"
+      },
+      {
+        type: 'heading',
         content: "Đại hội đại biểu toàn quốc lần thứ II (2/1951)",
         narrative: "Đây là sự kiện chính trị bản lề, đánh dấu bước trưởng thành vượt bậc của Đảng trong lãnh đạo kháng chiến."
       },
@@ -306,6 +400,20 @@ export const timelineData: TimelineItemType[] = [
         type: 'text',
         content: "Về quân sự: Đảng chủ trương mở các chiến dịch quy mô tương đối lớn (Hòa Bình, Tây Bắc, Thượng Lào) nhằm tiêu diệt sinh lực địch, giải phóng đất đai và phát triển chiến tranh du kích.",
         narrative: "Trên mặt trận quân sự, ta liên tiếp mở các chiến dịch lớn tại Hòa Bình, Tây Bắc, Thượng Lào, tiêu diệt sinh lực địch."
+      },
+      {
+        type: 'heading',
+        content: "Chiến dịch Hòa Bình (1952)"
+      },
+      {
+        type: 'text',
+        content: "Năm 1952, ta mở chiến dịch tại Hòa Bình nhằm tiêu diệt sinh lực địch, đánh bại âm mưu chia cắt và bình định của thực dân Pháp.",
+        narrative: "Chiến dịch Hòa Bình 1952 đã giáng một đòn mạnh mẽ vào ý đồ chiến lược của địch."
+      },
+      {
+        type: 'video',
+        src: 'https://youtu.be/l5LDo4V0P50?si=k3d4dsbPhjo6soPX',
+        caption: "Tư liệu về Chiến dịch Hòa Bình 1952"
       },
       {
         type: 'text',
@@ -365,8 +473,32 @@ export const timelineData: TimelineItemType[] = [
       },
       {
         type: 'text',
-        content: "Tháng 5/1953, tướng H. Navarre vạch ra kế hoạch hòng 'chuyển bại thành thắng' trong 18 tháng, xây dựng Điện Biên Phủ thành một tập đoàn cứ điểm mạnh nhất Đông Dương, một 'pháo đài khổng lồ không thể công phá'.",
-        narrative: "Thực dân Pháp tự hào xây dựng Điện Biên Phủ thành 'pháo đài bất khả xâm phạm', nhưng chúng đã sai lầm chiến lược nghiêm trọng."
+        content: "Tháng 5/1953, tướng Henri Navarre, tổng tham mưu trưởng lục quân khối Bắc Đại Tây Dương, được bổ nhiệm làm tổng chỉ huy quân viễn chinh Pháp ở Đông Dương. “Kế hoạch Navarre” được vạch ra với tham vọng “giành thế chủ động để đánh bại Việt Minh trong vòng 18 tháng”.",
+        narrative: "Thực dân Pháp tự hào với cái gọi là Kế hoạch Navarre, nhằm xoay chuyển tình thế cuộc chiến tranh Đông Dương."
+      },
+      {
+        type: 'image',
+        src: 'https://ordi.vn/wp-content/uploads/2023/05/T%C6%B0%E1%BB%9Bng-Gilles-%C4%90%E1%BA%A1i-t%C6%B0%E1%BB%9Bng-Navarre-Trung-t%C6%B0%E1%BB%9Bng-Cogny-t%E1%BA%A1i-%C4%90i%E1%BB%87n-Bi%C3%AAn-Ph%E1%BB%A7-ng%C3%A0y-29-11-1953.-Ngu%E1%BB%93n-Gamma-Keystone.jpg',
+        caption: "Tướng Navarre và các sĩ quan cao cấp tại Điện Biên Phủ"
+      },
+      {
+        type: 'heading',
+        content: "Xây dựng tập đoàn cứ điểm Điện Biên Phủ"
+      },
+      {
+        type: 'text',
+        content: "Tháng 11/1953, Navarre xây dựng tập đoàn căn cứ điểm Điện Biên Phủ với ý đồ thu hút và tiêu diệt các lực lượng chủ lực của quân kháng chiến để giành thắng lợi quyết định trên chiến trường Đông Dương.",
+        narrative: "Pháp tin rằng Điện Biên Phủ sẽ là 'cỗ máy xay thịt' nghiền nát bộ đội chủ lực của ta."
+      },
+      {
+        type: 'image',
+        src: 'https://cdn-i.vtcnews.vn/resize/th/upload/2024/05/04/dien-bien-phu-4-01295081.jpg',
+        caption: "Toàn cảnh tập đoàn cứ điểm Điện Biên Phủ"
+      },
+      {
+        type: 'quote',
+        content: "Tháng 2/1954 tướng John W.O’Daniel (nguyên tư lệnh quân đội Mỹ ở Thái Bình Dương, chỉ huy Phái bộ cố vấn quân sự Mỹ ở Đông Dương) thăm lực lượng Pháp ở Điện Biên Phủ đã tuyên bố “rất phấn khởi về triển vọng của cuộc chiến”.",
+        narrative: "Sự kiêu ngạo của các nhà quân sự phương Tây trước sức mạnh hỏa lực ở Điện Biên Phủ."
       },
       {
         type: 'heading',
@@ -376,6 +508,11 @@ export const timelineData: TimelineItemType[] = [
         type: 'text',
         content: "Tháng 9/1953, Bộ Chính trị thông qua chủ trương tác chiến Đông Xuân 1953-1954 nhằm phân tán lực lượng địch. Ngày 6/12/1953, Bộ Chính trị quyết định mở Chiến dịch Điện Biên Phủ, giao Đại tướng Võ Nguyên Giáp làm Tư lệnh kiêm Bí thư Đảng ủy chiến dịch.",
         narrative: "Bộ Chính trị giao trọng trách cho Đại tướng Võ Nguyên Giáp làm Tư lệnh kiêm Bí thư Đảng ủy chiến dịch. Cả nước dồn toàn lực chi viện cho mặt trận."
+      },
+      {
+        type: 'image',
+        src: 'https://media.baosonla.org.vn/public/linhlv/2024-04-30-oi/dai-tuong-vo-nguyen-giap-tham,-kiem-tra-dai-doan-cong-phao-351-trong-chien-dich-dien-bien-phu_.jpg',
+        caption: "Đại tướng Võ Nguyên Giáp thăm và kiểm tra đại đoàn Công pháo 351."
       },
       {
         type: 'text',
@@ -450,12 +587,17 @@ export const timelineData: TimelineItemType[] = [
       },
       {
         type: 'heading',
-        content: "Ký kết Hiệp định 21/7/1954"
+        content: "Ký kết Hiệp định Giơ-ne-vơ"
       },
       {
         type: 'text',
-        content: "Trải qua 75 ngày đàm phán căng thẳng, ngày 21/7/1954, Hiệp định đình chỉ chiến sự ở Việt Nam được ký kết.",
-        narrative: "75 ngày đàm phán căng thẳng, cuối cùng Hiệp định đình chỉ chiến sự đã được ký kết, chấm dứt cuộc chiến tranh kéo dài gần 9 năm."
+        content: "Ngày 20/7/1954, các bên tham dự hội nghị Giơ - ne - vơ đã ký Hiệp định đình chỉ chiến tranh ở Đông Dương, tuyên bố công nhận độc lập, thống nhất và toàn vẹn lãnh thổ của Việt Nam.",
+        narrative: "Ngày 20/7/1954, các bên tham dự hội nghị đã ký Hiệp định, kết thúc hoàn toàn cuộc kháng chiến chống Pháp oanh liệt của dân tộc."
+      },
+      {
+        type: 'image',
+        src: 'https://photo-baomoi.bmcdn.me/w700_r1/2021_07_20_450_39573907/f79f2fbc54febda0e4ef.jpg',
+        caption: "Lễ ký kết Hiệp định Giơ-ne-vơ tháng 7 năm 1954"
       },
       {
         type: 'heading',
