@@ -2,6 +2,7 @@ import { KeyboardControls, PointerLockControls, Sky, useGLTF } from '@react-thre
 import { useFrame, useThree } from '@react-three/fiber';
 import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type JSX } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Mesh, Object3D } from 'three';
 import { controlMap } from '../../../features/camera-controller/models/controls';
 import type { UserCameraHandle } from '../../../features/camera-controller/ui/Camera';
@@ -58,6 +59,56 @@ function SensitivitySync({ controlsRef }: { controlsRef: React.RefObject<any> })
   });
 
   return null;
+}
+
+// ─── Precise collision barrier matching the museum model shape ───────────
+// Museum model (scale=25): circular body center ≈ (0.5, 0, -3.5), outer radius ≈ 27
+// Front entrance corridor extends to Z ≈ 24. Bbox: X[-28.4..28.9] Z[-31.0..24.4]
+function MuseumBarrier() {
+  const CX = 0.5;
+  const CZ = -3.5;
+  const H = 12;
+  const HH = H / 2;
+  const T = 1.0;
+
+  const OUTER_R = 27;
+  const WALL_SIDES = 20;
+
+  const circularWalls = useMemo(() => {
+    const walls: { pos: [number, number, number]; rotY: number; halfW: number }[] = [];
+    const halfW = OUTER_R * Math.sin(Math.PI / WALL_SIDES) * 1.2;
+    for (let i = 0; i < WALL_SIDES; i++) {
+      const angle = (i / WALL_SIDES) * Math.PI * 2;
+      if (angle > 1.05 && angle < 2.09) continue; // skip entrance gap
+      walls.push({
+        pos: [CX + Math.cos(angle) * OUTER_R, HH, CZ + Math.sin(angle) * OUTER_R],
+        rotY: angle + Math.PI / 2,
+        halfW,
+      });
+    }
+    return walls;
+  }, []);
+
+  const entranceWalls = useMemo(() => [
+    { pos: [-8, HH, 16] as [number, number, number], rotY: 0.35, halfW: 10, halfD: T },
+    { pos: [9, HH, 16] as [number, number, number], rotY: -0.35, halfW: 10, halfD: T },
+    { pos: [0.5, HH, 24] as [number, number, number], rotY: 0, halfW: 12, halfD: T },
+  ], []);
+
+  return (
+    <>
+      {circularWalls.map((w, i) => (
+        <RigidBody key={`circ-${i}`} type="fixed" position={w.pos} rotation={[0, w.rotY, 0]} colliders={false}>
+          <CuboidCollider args={[w.halfW, HH, T]} />
+        </RigidBody>
+      ))}
+      {entranceWalls.map((w, i) => (
+        <RigidBody key={`ent-${i}`} type="fixed" position={w.pos} rotation={[0, w.rotY, 0]} colliders={false}>
+          <CuboidCollider args={[w.halfW, HH, w.halfD]} />
+        </RigidBody>
+      ))}
+    </>
+  );
 }
 
 // ─── Ground plane ────────────────────────────────────────────────────────
@@ -147,6 +198,9 @@ function MuseumSceneContent({
           {/* Museum 3D model (visual only) */}
           <VisualModel scale={25} path={MUSEUM_MODEL_PATH} />
 
+          {/* Invisible collision barrier around museum */}
+          <MuseumBarrier />
+
           {/* ═══ Painting Exhibition on circular wall ═══ */}
           <PaintingExhibition
             onOpenPainting={onOpenPainting}
@@ -165,7 +219,7 @@ export interface MuseumSceneProps {
   onPause?: () => void;
 }
 
-export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
+export const MuseumPage = ({ isPaused = false }: MuseumSceneProps) => {
   const [modalPainting, setModalPainting] = useState<PaintingData | null>(null);
   const [activePaintingId, setActivePaintingId] = useState<string | null>(null);
   const [nearMuseum, setNearMuseum] = useState(false);
@@ -191,13 +245,15 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
     setModalPainting(null);
   }, []);
 
-  // ESC → pause; F → teleport into museum when near
+  // ESC → go home; F → teleport into museum when near
+  const navigate = useNavigate();
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape' && onPause && !isModalOpen) {
+    if (e.key === 'Escape' && !isModalOpen) {
       e.preventDefault();
       e.stopPropagation();
       document.exitPointerLock();
-      onPause();
+      navigate('/');
+      return;
     }
     // F key → teleport into museum center
     if ((e.key === 'f' || e.key === 'F') && nearMuseum && !isModalOpen) {
@@ -206,7 +262,7 @@ export const MuseumPage = ({ isPaused = false, onPause }: MuseumSceneProps) => {
       hasEnteredMuseum.current = true;
       setNearMuseum(false);
     }
-  }, [onPause, isModalOpen, nearMuseum]);
+  }, [navigate, isModalOpen, nearMuseum]);
 
   useEffect(() => {
     if (!isPaused) {

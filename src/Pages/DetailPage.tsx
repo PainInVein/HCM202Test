@@ -10,12 +10,22 @@ export function DetailPage() {
   const item = timelineData.find(i => i.id === Number(id));
   const containerRef = useRef<HTMLDivElement>(null);
   const [revealedFigures, setRevealedFigures] = useState<Set<string>>(new Set());
+  const [revealedImages, setRevealedImages] = useState<Set<number>>(new Set());
 
   const toggleFigure = (figureKey: string) => {
     setRevealedFigures(prev => {
       const next = new Set(prev);
       if (next.has(figureKey)) next.delete(figureKey);
       else next.add(figureKey);
+      return next;
+    });
+  };
+
+  const toggleImage = (idx: number) => {
+    setRevealedImages(prev => {
+      const next = new Set(prev);
+      if (next.has(idx)) next.delete(idx);
+      else next.add(idx);
       return next;
     });
   };
@@ -41,12 +51,21 @@ export function DetailPage() {
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 p-8 flex justify-between items-center mix-blend-difference text-white">
-        <button
-          onClick={() => navigate(-1)}
-          className="group flex items-center gap-3 font-display uppercase tracking-widest text-sm hover:opacity-70 transition-opacity"
-        >
-          <span className="text-xl">←</span> Quay lại
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="group flex items-center gap-3 font-display uppercase tracking-widest text-sm hover:opacity-70 transition-opacity"
+          >
+            <span className="text-xl">←</span> Quay lại
+          </button>
+          <span className="opacity-30">|</span>
+          <button
+            onClick={() => navigate("/")}
+            className="group flex items-center gap-3 font-display uppercase tracking-widest text-sm hover:opacity-70 transition-opacity"
+          >
+            <span className="text-xl"></span> Trang chủ
+          </button>
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -114,20 +133,37 @@ export function DetailPage() {
                     </blockquote>
                   );
 
-                case 'image':
+                case 'image': {
+                  const isImageRevealed = revealedImages.has(idx);
                   return (
                     <figure key={idx} id={`detail-${idx}`} className="my-16 group scroll-mt-32">
-                      <div className="relative overflow-hidden shadow-lg border-8 border-white bg-white rotate-1 hover:rotate-0 transition-transform duration-500">
+                      <div
+                        className="relative overflow-hidden shadow-lg border-8 border-white bg-white rotate-1 hover:rotate-0 transition-transform duration-500 cursor-pointer"
+                        onClick={() => toggleImage(idx)}
+                      >
                         <img src={detail.src} alt={detail.caption} className="w-full h-auto sepia-[0.2] group-hover:sepia-0 transition-all duration-700" />
                         <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.1)] pointer-events-none"></div>
+                        {/* Hint overlay when caption not revealed */}
+                        {detail.caption && !isImageRevealed && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4 flex items-center justify-center">
+                            <span className="text-white/90 font-accent text-sm tracking-wider uppercase">Bấm để xem mô tả</span>
+                          </div>
+                        )}
                       </div>
-                      {detail.caption && (
-                        <figcaption className="text-center font-accent text-sm tracking-widest text-vintage-brown/60 mt-4 uppercase">
-                          Fig. {idx + 1} — {detail.caption}
-                        </figcaption>
+                      {detail.caption && isImageRevealed && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <figcaption className="text-center font-accent text-base tracking-widest text-vintage-brown bg-vintage-gold/10 border border-vintage-gold/30 rounded-lg mt-4 py-3 px-4 uppercase">
+                            Fig. {idx + 1} — {detail.caption}
+                          </figcaption>
+                        </motion.div>
                       )}
                     </figure>
                   );
+                }
 
                 case 'video': {
                   const rawUrl = detail.src || detail.content || '';
